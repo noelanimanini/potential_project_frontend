@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 const SignUp = (props) => {
     const dispatch = useDispatch()
     const paperStyle = {padding :20, height: '50vh', width:280, margin: "20px auto"}
-    const avatarStyle = {backgroundColor: 'pink'}
+    // const avatarStyle = {backgroundColor: 'pink'}
     const buttonStyle = {margin: '8px 0'}
     const usernameInput = useSelector(state => state.usernameInput)
     const passwordInput = useSelector(state => state.passwordInput)
