@@ -1,12 +1,13 @@
- import {useEffect} from 'react';
+ import React, {useEffect, Fragment} from 'react';
  import {useDispatch, useSelector} from 'react-redux'
  import BodyContainer from "./BodyContainer"
- 
+ import NavBar from './NavBar'
 
  const Home = () => {
     const dispatch = useDispatch()
     const user = useSelector(state => state.user) 
-    const bodyparts = useSelector(state => state.bodyparts)
+ 
+    // const bodyparts = useSelector(state => state.bodyparts)
 
      useEffect(() => {
 
@@ -18,9 +19,9 @@
             }
             
         } 
-        if (bodyparts.length === 0) {
-            getBodyParts(token)
-        }
+        // if (bodyparts.length === 0) {
+        //     getBodyParts(token)
+        // }
         
      })
 
@@ -49,23 +50,28 @@
         }
     }
 
-    const getBodyParts = (token) => {
-        fetch('http://localhost:3000/body_parts', {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then(response => response.json())
-        .then(bodyparts => dispatch({
-            type: 'SET_BODY_PARTS',
-            bodyparts: bodyparts
-        }))
-    }
+    // const getBodyParts = (token) => {
+    //     fetch('http://localhost:3000/body_parts', {
+    //         method: 'GET',
+    //         headers: {
+    //             Authorization: `Bearer ${token}`
+    //         }
+    //     }).then(response => response.json())
+    //     .then(bodyparts => dispatch({
+    //         type: 'SET_BODY_PARTS',
+    //         bodyparts: bodyparts
+    //     }))
+    // }
 
     return (
-        <div>
-           {<BodyContainer/>}
-        </div>
+       <Fragment>
+
+           <NavBar/>
+        
+           <BodyContainer/>
+       </Fragment>
+            
+  
     )
 }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { Paper, Grid, TextField, Button, Typography} from '@material-ui/core';
 import {useSelector, useDispatch } from 'react-redux'; 
 import { Link } from 'react-router-dom'
+import potential from './potential.png';
 
 const Login = (props) => {
     const dispatch = useDispatch()
@@ -52,17 +53,39 @@ const Login = (props) => {
                 <Grid>
                     <Paper elevation={20} style={paperStyle}>
                         <Grid align="center">
-
+                            <img src={potential} alt='logo'/>
                         </Grid>
-                        <TextField label="Username" placeholder="Enter Username" name="username" fullWidth required onChange={(e) => dispatch({
+                        <TextField 
+               
+                        label="Username" 
+                        placeholder="Enter Username" 
+                        name="username" 
+                        fullWidth required 
+                        onChange={(e) => dispatch({
                             type: 'CHANGE_USERNAME_INPUT',
                             value: e.target.value
-                        })}/>
-                        <TextField label="Password" placeholder="Enter Password" name="password" type="password" fullWidth required onChange={(e) => dispatch({
+                        })}
+                     
+                        />
+                        <TextField 
+                   
+                        label="Password" 
+                        placeholder="Enter Password" 
+                        name="password" type="password" 
+                        fullWidth required 
+                        onChange={(e) => dispatch({
                             type: 'CHANGE_PASSWORD_INPUT', 
                             value: e.target.value
-                        })}/>
-                        <Button type="submit" value="submit" background-color="white" style={buttonStyle} fullWidth variant="contained" onClick={(e) => handleSubmit(e)} >Sign In</Button>
+                        })}
+                   
+                        />
+                        <Button 
+                        type="submit" 
+                        value="submit" 
+                        background-color="white" 
+                        style={buttonStyle} 
+                        fullWidth variant="contained" 
+                        onClick={(e) => handleSubmit(e)} >Sign In</Button>
                         <Typography> Don't have an account? 
                             <Link to="/signup">
                                 Sign Up

@@ -7,6 +7,8 @@ import Popper from '@material-ui/core/Popper';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
+import {useDispatch } from 'react-redux'
+import {Redirect} from 'react-router-dom'
 // import Avatar from '@material-ui/core/Avatar';
 // import menubutton from './menubutton.png'
 
@@ -54,7 +56,16 @@ const useStyles = makeStyles((theme) => ({
   
       prevOpen.current = open;
     }, [open]);
-
+        
+    const dispatch = useDispatch()
+    const handleLogout = () => {
+        localStorage.clear()
+        dispatch({
+            type: 'SET_USER',
+            user: {}
+        })
+      
+      }
 
   return (
     <div className={classes.root}>
@@ -79,7 +90,10 @@ const useStyles = makeStyles((theme) => ({
 
                     <MenuItem onClick={handleClose}>Profile</MenuItem>
                     <MenuItem onClick={handleClose}>My account</MenuItem>
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+
+                    {!localStorage.token && <Redirect to="/login"/>}
+                    
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
