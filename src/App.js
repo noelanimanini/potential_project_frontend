@@ -4,6 +4,9 @@ import {Route, Router, Switch} from 'react-router-dom'
 import history from './history';
 import SignUp from './SignUp'
 import Home from './Home';
+import Profile from './Profile'
+import StudyGroup from './StudyGroup'
+import Account from './Account'
 
 function App() {
   return (
@@ -13,6 +16,9 @@ function App() {
         <Route exact path="/login" component={props => <Login {...props}/>} />
         <Route exact path="/signup" component={props => <SignUp {...props}/>} />
         <Route exact path="/home" component={props => <Home {...props}/>}/>
+        <Route exact path="/profile" component={props => <Profile {...props}/>}/>
+        <Route exact path="/studygroup" component={props => <StudyGroup {...props}/>}/>
+        <Route exact path="/account" component={props => <Account {...props}/>}/>
       </Switch> 
     </Router>
     </div>
