@@ -2,8 +2,9 @@ export const initialState = {
     usernameInput: '',
     passwordInput: '',
     user: null,
-    bodyparts: []
-    
+    bodyparts: [],
+    userStacks: [],
+   
 }
 
 export const reducer = ( state = initialState, action ) => {
@@ -29,6 +30,19 @@ export const reducer = ( state = initialState, action ) => {
                 ...state, 
                 bodyparts: action.bodyparts
             }
+        case 'SET_STACKS':
+            //fetch to the backend and see all the users stuff 
+            return {
+                ...state, 
+                userStacks: action.userStacks
+            }
+        case 'ADD_STACK':
+            return {
+                ...state, 
+                userStacks: [...state.userStacks, action.newStack]
+            }
+     
+      
         default: 
             return state
     }

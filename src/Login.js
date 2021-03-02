@@ -42,6 +42,10 @@ const Login = (props) => {
                     id: data.id
                 }
             })
+            dispatch({
+                type: 'SET_STACKS',
+                userStacks: data.card_stack
+            })
             props.history.push('/home')
         }
     }

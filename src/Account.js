@@ -1,11 +1,12 @@
-import React from 'react'
-import NavBar from './NavBar'
+import React, {Fragment} from 'react'
 
 function Account() {
     return (
-        <div>
-            <NavBar />
-        </div>
+       <Fragment>
+        
+
+           
+       </Fragment>
     )
 }
 
