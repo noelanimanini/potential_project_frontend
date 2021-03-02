@@ -27,7 +27,7 @@ const Stack = () => {
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
     const userStacks = useSelector(state => state.userStacks)
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpenCard, setOpenCard] = useState(false)
     const [stack, setStack] = useState(null)
     //
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -65,8 +65,7 @@ const Stack = () => {
     }
     
     const renderStacks = () => {
-       return userStacks.map( stack => {
-          return (
+       return userStacks.map( stack =>  (
               <Grid id={stack.id}>
                 <Card className={classes.root} variant="outlined">
                     <CardContent>
@@ -80,18 +79,20 @@ const Stack = () => {
                     </Typography>
                     </CardContent>
                     <CardActions>
-                    <Button size="small" onClick={() => handleLearn(stack)}>Learn More</Button>
+
+                    <Button size="small" onClick={() => handleLearn(stack)}>See Stack</Button>
                   
-                    <Button size="small" style={buttonStyle} ><ClearIcon></ClearIcon></Button>
+    
                     </CardActions>
                 </Card>
               </Grid>
-    )})}
+    ))}
 
     const handleLearn = (stack) => {
+        setOpenCard(true)
         setStack(stack)
         console.log(stack)
-        setIsOpen(true)
+       
     }
     
     return (
@@ -114,10 +115,11 @@ const Stack = () => {
                 </div>
             </Grid>
         </Card>
+
         <div style={cardStyle}>
             {renderStacks() }
-            <ModalStack open={isOpen} onClose={() => setIsOpen(false)} cardInfo={stack}>
-
+            <ModalStack open={isOpenCard} onClose={() => setOpenCard(false)} cardInfo={stack}>
+                    RENDER
             </ModalStack>
         </div>
 

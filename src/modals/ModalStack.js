@@ -22,19 +22,26 @@ const MODAL_STYLES = {
 }
 
 function ModalStack({open, onClose, cardInfo}) {
-    const buttonStyle = {display: 'flex'}
-  
+    
     if (!open) return null
 
     const renderModal = () => {
     
            return (
                <div style={MODAL_STYLES}>
-                    <Typography>
+                   <Typography>
+                       Title: {cardInfo.title}
+                   </Typography>
+                   <Typography>
+                       Description: {cardInfo.description}
+                   </Typography>
+                   
+                   <Button onClick={onClose}><HighlightOffIcon ></HighlightOffIcon></Button>
+                    {/* <Typography>
                         {cardInfo}
                     </Typography>
                     <Button onClick={onClose}><HighlightOffIcon style={buttonStyle}></HighlightOffIcon></Button>
-                    <Button onClick={(e) => handleClick(e)}><AddBoxTwoToneIcon></AddBoxTwoToneIcon></Button>
+                    <Button onClick={(e) => handleClick(e)}><AddBoxTwoToneIcon></AddBoxTwoToneIcon></Button> */}
                </div>
            ) 
     }

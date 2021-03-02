@@ -1,13 +1,12 @@
 import React from 'react'
 import {Button, Typography, Menu, MenuItem} from '@material-ui/core'
+// import ExpandLess from '@material-ui/icons/ExpandLess';
+// import ExpandMore from '@material-ui/icons/ExpandMore';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import ReactDom from 'react-dom'
 import AddBoxTwoToneIcon from '@material-ui/icons/AddBoxTwoTone';
+import ReactDom from 'react-dom'
 import {useSelector, useDispatch} from 'react-redux'
-import CardActionArea from '@material-ui/core/CardActionArea';
-// import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent'
+import RenderCards from '../RenderCards'
 
 const MODAL_STYLES = {
     position: 'fixed',
@@ -21,18 +20,8 @@ const MODAL_STYLES = {
     borderStyle: 'dotted',
 }
 
-// const OVERLAY_STYLE = {
-//     postion: 'fixed',
-//     top: 0, 
-//     left: 0, 
-//     right: 0, 
-//     bottom: 0,
-//     backgroundColor: 'rgba(0,0,0, .7)',
-//     zIndex: 10000
-// }
 function Modal({open, onClose, bodypart, card}) {
     const buttonStyle = {display: 'flex'}
-    console.log(card)
     //
     const [anchorEl, setAnchorEl] = React.useState(null);
     const handleClick = (event) => {
@@ -42,10 +31,14 @@ function Modal({open, onClose, bodypart, card}) {
       setAnchorEl(null);
     };
     //
+
+    
+
     if (!open) return null
+    
 
     const renderModal = () => {
-    
+        
            return (
                <div style={MODAL_STYLES} id={bodypart.id}>
                 {bodypart.title}
@@ -54,41 +47,59 @@ function Modal({open, onClose, bodypart, card}) {
                 <Button onClick={onClose}>
                     <HighlightOffIcon style={buttonStyle}></HighlightOffIcon>
                 </Button>
+                {/* <ListItem button onClick={handleClick}>
+                <ListItemText primary="Inbox" />
+                {open ? <ExpandLess /> : <ExpandMore />}
+                    </ListItem>
+                    <Collapse in={open} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                        <ListItem button >
+                            <ListItemText primary="Starred" />
+                        </ListItem>
+                        </List>
+                    </Collapse> */}
                 <Button onClick={handleClick}>
                     <AddBoxTwoToneIcon>
                     </AddBoxTwoToneIcon>
                 </Button>
+
                 <Menu 
                     id="simple-menu"
                     anchorEl={anchorEl}
                     keepMounted
                     open={Boolean(anchorEl)}
-                    onClose={handleClose}>
-                    
-                    <MenuItem onClick={(e) => handleItem(e, bodypart)}
-                    ></MenuItem>
-                    </Menu>
+                    onClose={handleClose}>             
+                            
+                    {card.map( cardTitle => (
+                    <MenuItem onClick={(e) => handleItem(e, bodypart, cardTitle)}>
+                        {cardTitle.title}
+                    </MenuItem>
+    
+                    ))}        
+            
+               </Menu>
                 </div>
            ) 
     }
 
 
-    const handleItem = (e, bodypart) => {
+    const handleItem = (e, bodypart, card) => {
         console.log(bodypart)
 
         e.preventDefault()
-        // const token = localStorage.token
-        // fetch('http://localhost:3000/user_body_part',{
-        //     method: "POST",
-        //     headers: {
-        //         'Content-Type' : 'application/json', 
-        //         Authorization: `Bearer ${token}`
-        //     }, 
-        //     body: JSON.stringify({
-        //         card_stack_id: card.id,
-        //         body_part_id: bodypart.id
-        //     })
-        // }).then(response => response.json())
+        const token = localStorage.token
+        fetch('http://localhost:3000/user_body_parts',{
+            method: "POST",
+            headers: {
+                'Content-Type' : 'application/json', 
+                Authorization: `Bearer ${token}`
+            }, 
+            body: JSON.stringify({
+                card_stack_id: card.id,
+                body_part_id: bodypart.id
+            })
+        }).then(response => response.json())
+        .then(data => console.log(data))
     }
     
 

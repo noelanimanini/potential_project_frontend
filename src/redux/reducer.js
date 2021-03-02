@@ -4,7 +4,7 @@ export const initialState = {
     user: null,
     bodyparts: [],
     userStacks: [],
-   
+    
 }
 
 export const reducer = ( state = initialState, action ) => {
@@ -41,7 +41,6 @@ export const reducer = ( state = initialState, action ) => {
                 ...state, 
                 userStacks: [...state.userStacks, action.newStack]
             }
-     
       
         default: 
             return state
