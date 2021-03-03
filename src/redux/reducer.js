@@ -4,7 +4,8 @@ export const initialState = {
     user: null,
     bodyparts: [],
     userStacks: [],
-    
+    formTitleInput: '',
+    formDescriptionInput: ''
 }
 
 export const reducer = ( state = initialState, action ) => {
@@ -41,7 +42,28 @@ export const reducer = ( state = initialState, action ) => {
                 ...state, 
                 userStacks: [...state.userStacks, action.newStack]
             }
-      
+        case 'DELETE_STACK': 
+            return {
+                ...state, 
+                userStacks: state.userStacks.filter(stack => stack.id !== action.id)
+
+            }
+        case 'CHANGE_TITLE_INPUT':
+            return {
+                ...state, 
+                formTitleInput: action.value
+            }
+        case 'CHANGE_DESCRIPTION_INPUT':
+            return {
+                ...state, 
+                formDescriptionInput: action.value
+            }
+        case 'SET_FORM': 
+            return {
+                ...state, 
+                userStacks: 
+                state.userStacks.map(oldStack => oldStack.id === action.form.id ? action.form : oldStack  )
+            }
         default: 
             return state
     }

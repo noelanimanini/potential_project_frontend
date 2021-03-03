@@ -80,9 +80,18 @@ const Stack = () => {
                     </CardContent>
                     <CardActions>
 
-                    <Button size="small" onClick={() => handleLearn(stack)}>See Stack</Button>
-                  
-    
+                    <Button onClick={handleClick}>See Stack</Button>
+                    <Menu 
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}>
+
+                    <MenuItem onClick={() => handleLearn(stack)}>See Stack</MenuItem>
+                    <MenuItem onClick={() => handleDelete(stack)}>Delete Stack</MenuItem>
+
+                    </Menu>
                     </CardActions>
                 </Card>
               </Grid>
@@ -93,6 +102,23 @@ const Stack = () => {
         setStack(stack)
         console.log(stack)
        
+    }
+
+
+    const handleDelete = (stack) => {
+        console.log('it VERKS')
+        console.log(stack)
+        const token = localStorage.token
+        fetch(`http://localhost:3000/card_stacks/${stack.id}`,{
+            method: "DELETE",
+            headers: {
+                'Content-Type' : 'application/json', 
+                Authorization: `Bearer ${token}`
+            },
+        }).then(() => dispatch({
+            type: 'DELETE_STACK',
+            id: stack.id
+        }))
     }
     
     return (
@@ -112,6 +138,18 @@ const Stack = () => {
                     
                     <MenuItem onClick={(e) => stackClick(e)}>Create a Stack</MenuItem>
                     </Menu>
+                    {/* <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                        <AddIcon></AddIcon>
+                    </Button>
+                    <Menu 
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}>
+                    
+                    <MenuItem onClick={() => deleteStack()}>Delete a Stack</MenuItem>
+                    </Menu> */}
                 </div>
             </Grid>
         </Card>
@@ -119,7 +157,7 @@ const Stack = () => {
         <div style={cardStyle}>
             {renderStacks() }
             <ModalStack open={isOpenCard} onClose={() => setOpenCard(false)} cardInfo={stack}>
-                    RENDER
+              
             </ModalStack>
         </div>
 
@@ -130,3 +168,5 @@ const Stack = () => {
 }
 
 export default Stack
+
+

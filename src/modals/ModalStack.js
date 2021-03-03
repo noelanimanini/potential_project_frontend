@@ -1,13 +1,17 @@
 import React from 'react'
-import {Button, Typography} from '@material-ui/core'
+import {Button, Typography, Menu, MenuItem, Input, TextField} from '@material-ui/core'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import ReactDom from 'react-dom'
-import AddBoxTwoToneIcon from '@material-ui/icons/AddBoxTwoTone';
-import {useSelector, useDispatch} from 'react-redux'
-import CardActionArea from '@material-ui/core/CardActionArea';
-// import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent'
+import AddIcon from '@material-ui/icons/Add';
+import ModalForm from './ModalForm'
+import {useState} from 'react';
+// import {useSelector, useDispatch} from 'react-redux'
+// import AddBoxTwoToneIcon from '@material-ui/icons/AddBoxTwoTone';
+// import {useSelector, useDispatch} from 'react-redux'
+// import CardActionArea from '@material-ui/core/CardActionArea';
+// // import CardContent from '@material-ui/core/CardContent';
+// import CardMedia from '@material-ui/core/CardMedia';
+// import CardContent from '@material-ui/core/CardContent'
 
 const MODAL_STYLES = {
     position: 'fixed',
@@ -22,11 +26,22 @@ const MODAL_STYLES = {
 }
 
 function ModalStack({open, onClose, cardInfo}) {
-    
+    // const cards = useSelector(state => state.userStacks)
+    // const dispatch = useDispatch()
+    const [openEdit, setOpenEdit] = useState(false)
+    //
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+    //
     if (!open) return null
 
     const renderModal = () => {
-    
+
            return (
                <div style={MODAL_STYLES}>
                    <Typography>
@@ -37,20 +52,39 @@ function ModalStack({open, onClose, cardInfo}) {
                    </Typography>
                    
                    <Button onClick={onClose}><HighlightOffIcon ></HighlightOffIcon></Button>
-                    {/* <Typography>
-                        {cardInfo}
-                    </Typography>
-                    <Button onClick={onClose}><HighlightOffIcon style={buttonStyle}></HighlightOffIcon></Button>
-                    <Button onClick={(e) => handleClick(e)}><AddBoxTwoToneIcon></AddBoxTwoToneIcon></Button> */}
+                   <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                        <AddIcon></AddIcon>
+                    </Button>
+                    <Menu 
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}> 
+
+                    <MenuItem onClick={() => handleEditForm(cardInfo)} >Edit Stack</MenuItem>
+                    </Menu>
+                    
                </div>
            ) 
     }
    
+    const handleEditForm = (cardInfo) => {
+        console.log(cardInfo)
+        setOpenEdit(true)
+        handleClose()
+        console.log(openEdit)
+        
+    }
 
     return ReactDom.createPortal(
+      
         <div>
             <li>
                 {renderModal()}
+                <ModalForm open={openEdit} cardInfo={cardInfo} setOpenEdit={setOpenEdit} /> 
+
+
             </li>
         </div>,
             
@@ -61,18 +95,4 @@ function ModalStack({open, onClose, cardInfo}) {
 
 export default ModalStack
 
-const handleClick = (e) => {
-    e.preventDefault()
-    // const token = localStorage.token
-    // console.log(e)
-    // fetch('http://localhost:3000/',{
-    //     method: "PATCH",
-    //     headers: {
-    //         'Content-Type' : 'application/json', 
-    //         Authorization: `Bearer ${token}`
-    //     }, 
-    //     body: JSON.stringify({
 
-    //     })
-    // }).then(response => response.json())
-}
