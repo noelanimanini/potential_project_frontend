@@ -7,13 +7,12 @@ import Home from './Home';
 import Profile from './Profile'
 import StudyGroup from './StudyGroup'
 import Account from './Account'
-import NavBar from './NavBar'
+
 
 function App() {
   return (
     <div className="App">
     <Router history={history}>
-      <NavBar/>
       <Switch>
         <Route exact path="/login" component={props => <Login {...props}/>} />
         <Route exact path="/signup" component={props => <SignUp {...props}/>} />

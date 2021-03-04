@@ -1,12 +1,12 @@
 import React from 'react'
 import {Button, Typography, Menu, MenuItem} from '@material-ui/core'
-// import ExpandLess from '@material-ui/icons/ExpandLess';
-// import ExpandMore from '@material-ui/icons/ExpandMore';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import AddBoxTwoToneIcon from '@material-ui/icons/AddBoxTwoTone';
 import ReactDom from 'react-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import RenderCards from '../RenderCards'
+import {useEffect} from 'react';
+
 
 const MODAL_STYLES = {
     position: 'fixed',
@@ -22,6 +22,8 @@ const MODAL_STYLES = {
 
 function Modal({open, onClose, bodypart, card}) {
     const buttonStyle = {display: 'flex'}
+    const dispatch = useDispatch()
+    const userBodyParts = useSelector(state => state.userBodyParts)
     //
     const [anchorEl, setAnchorEl] = React.useState(null);
     const handleClick = (event) => {
@@ -31,33 +33,19 @@ function Modal({open, onClose, bodypart, card}) {
       setAnchorEl(null);
     };
     //
-
-    
-
     if (!open) return null
-    
 
+    
     const renderModal = () => {
-        
            return (
                <div style={MODAL_STYLES} id={bodypart.id}>
                 {bodypart.title}
                 <img src={bodypart.image} />
-               
+
                 <Button onClick={onClose}>
                     <HighlightOffIcon style={buttonStyle}></HighlightOffIcon>
                 </Button>
-                {/* <ListItem button onClick={handleClick}>
-                <ListItemText primary="Inbox" />
-                {open ? <ExpandLess /> : <ExpandMore />}
-                    </ListItem>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                        <ListItem button >
-                            <ListItemText primary="Starred" />
-                        </ListItem>
-                        </List>
-                    </Collapse> */}
+               
                 <Button onClick={handleClick}>
                     <AddBoxTwoToneIcon>
                     </AddBoxTwoToneIcon>
@@ -75,8 +63,7 @@ function Modal({open, onClose, bodypart, card}) {
                         {cardTitle.title}
                     </MenuItem>
     
-                    ))}        
-            
+                    ))}                  
                </Menu>
                 </div>
            ) 
@@ -84,8 +71,6 @@ function Modal({open, onClose, bodypart, card}) {
 
 
     const handleItem = (e, bodypart, card) => {
-        console.log(bodypart)
-
         e.preventDefault()
         const token = localStorage.token
         fetch('http://localhost:3000/user_body_parts',{
@@ -95,13 +80,21 @@ function Modal({open, onClose, bodypart, card}) {
                 Authorization: `Bearer ${token}`
             }, 
             body: JSON.stringify({
-                card_stack_id: card.id,
-                body_part_id: bodypart.id
+
+                user_body_part: {
+                    card_stack_id: card.id,
+                    body_part_id: bodypart.id
+                }
             })
         }).then(response => response.json())
-        .then(data => console.log(data))
+        .then(newUserBodyParts => dispatch({
+            type: 'GRAB_USER_BODY_PARTS',
+            newUserBodyParts: newUserBodyParts
+        })
+        
+        )
     }
-    
+    console.log(userBodyParts)
 
     return ReactDom.createPortal(
         <>

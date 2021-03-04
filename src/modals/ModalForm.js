@@ -2,13 +2,13 @@ import React from 'react'
 import {Button, TextField,Input} from '@material-ui/core'
 import {useDispatch, useSelector} from 'react-redux'
 
-function ModalForm({open, cardInfo, setOpenEdit}) {
+function ModalForm({open, cardInfo, setOpenEdit, renderModal, changeStackForm, setStack}) {
     const dispatch = useDispatch()
     const formTitleInput = useSelector(state => state.formTitleInput)
     const formDescriptionInput = useSelector(state => state.formDescriptionInput)
     const form = useSelector(state => state.form )
 
-
+    console.log(renderModal)
     const MODAL_STYLES = {
         position: 'fixed',
         top: '50%',
@@ -42,17 +42,17 @@ function ModalForm({open, cardInfo, setOpenEdit}) {
             })
         }) 
         .then(response => response.json())
-        .then(data => 
-            dispatch({
+        .then(data => handleForm(data))
+    }
+
+    const handleForm = (data) => {
+        console.log(data)
+        setStack(data)
+        dispatch({
             type: 'SET_FORM',
-            form: {
-                title: data.title, 
-                description: data.description,
-                user_id: data.user_id,
-                id: data.id
-            }
+            form: data
         })
-        )
+        // changeStackForm(data)
     }
 
     return (

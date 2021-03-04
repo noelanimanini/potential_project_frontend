@@ -5,7 +5,8 @@ export const initialState = {
     bodyparts: [],
     userStacks: [],
     formTitleInput: '',
-    formDescriptionInput: ''
+    formDescriptionInput: '',
+    userBodyParts: []
 }
 
 export const reducer = ( state = initialState, action ) => {
@@ -59,11 +60,48 @@ export const reducer = ( state = initialState, action ) => {
                 formDescriptionInput: action.value
             }
         case 'SET_FORM': 
+        console.log(action)
             return {
                 ...state, 
-                userStacks: 
-                state.userStacks.map(oldStack => oldStack.id === action.form.id ? action.form : oldStack  )
+                userStacks: state.userStacks.map(oldStack => {
+
+                    if (oldStack.id === action.form.id) {
+                        return action.form
+                    } else {
+                        return oldStack 
+                    }
+                } )
             }
+        case 'SET_USER_BODY_PARTS':
+            return {
+                ...state, 
+                userBodyParts: action.userBodyParts
+            }
+        case 'GRAB_USER_BODY_PARTS':
+            return {
+                ...state,
+                userBodyParts: [...state.userBodyParts, action.newUserBodyParts]
+            }
+        case 'FILTER_FORM': 
+            // let oldStack = state.userStacks.filter(stack => stack.id !== action.input.id)
+            // debugger
+            // let updatedStack = [...oldStack, action.input]
+            // debugger
+            //the state for stack is not updating correctly, it is not rerendering the new stack info. its not filtering out correctly.
+            return {
+                ...state, 
+                userStacks:  state.userStacks.map(oldStack => {
+
+                    if (oldStack.id === action.form.id) {
+                        return action.form
+                    } else {
+                        return oldStack 
+                    }
+                } )
+                // state.userStacks.map(oldStack => oldStack.id === action.form.id ? action.form : oldStack  )
+                // [...state.userStacks, updatedStack]
+                }
+            // debugger
         default: 
             return state
     }

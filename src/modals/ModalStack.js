@@ -4,14 +4,9 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import ReactDom from 'react-dom'
 import AddIcon from '@material-ui/icons/Add';
 import ModalForm from './ModalForm'
-import {useState} from 'react';
-// import {useSelector, useDispatch} from 'react-redux'
-// import AddBoxTwoToneIcon from '@material-ui/icons/AddBoxTwoTone';
-// import {useSelector, useDispatch} from 'react-redux'
-// import CardActionArea from '@material-ui/core/CardActionArea';
-// // import CardContent from '@material-ui/core/CardContent';
-// import CardMedia from '@material-ui/core/CardMedia';
-// import CardContent from '@material-ui/core/CardContent'
+import {useState, useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux'
+
 
 const MODAL_STYLES = {
     position: 'fixed',
@@ -25,9 +20,7 @@ const MODAL_STYLES = {
     borderStyle: 'dotted',
 }
 
-function ModalStack({open, onClose, cardInfo}) {
-    // const cards = useSelector(state => state.userStacks)
-    // const dispatch = useDispatch()
+function ModalStack({open, onClose, cardInfo, changeStackForm, setStack}) {
     const [openEdit, setOpenEdit] = useState(false)
     //
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -37,7 +30,7 @@ function ModalStack({open, onClose, cardInfo}) {
     const handleClose = () => {
       setAnchorEl(null);
     };
-    //
+  
     if (!open) return null
 
     const renderModal = () => {
@@ -82,7 +75,7 @@ function ModalStack({open, onClose, cardInfo}) {
         <div>
             <li>
                 {renderModal()}
-                <ModalForm open={openEdit} cardInfo={cardInfo} setOpenEdit={setOpenEdit} /> 
+                <ModalForm open={openEdit} cardInfo={cardInfo} setOpenEdit={setOpenEdit} setStack={setStack} renderModal={renderModal()} changeStackForm={changeStackForm}/> 
 
 
             </li>

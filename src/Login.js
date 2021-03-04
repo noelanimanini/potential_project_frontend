@@ -7,7 +7,6 @@ import potential from './potential.png';
 const Login = (props) => {
     const dispatch = useDispatch()
     const paperStyle = {padding: 20, height: '50vh', width:280, margin: "20px auto"}
-    // const avatarStyle = {backgroundColor: 'pink'}
     const buttonStyle = {margin: '8px 0'}
     const usernameInput = useSelector(state => state.usernameInput)
     const passwordInput = useSelector(state => state.passwordInput)
@@ -38,18 +37,23 @@ const Login = (props) => {
             dispatch({
                 type: 'SET_USER',
                 user: {
-                    username: data.username,
-                    id: data.id
+                    username: data.user.username,
+                    id: data.user.id
                 }
             })
             dispatch({
                 type: 'SET_STACKS',
-                userStacks: data.card_stack
+                userStacks: data.user.card_stacks
             })
+            // dispatch({
+            //     type: 'SET_USER_BODY_PARTS',
+            //     userBodyParts: data.userBodyParts
+            // })
+            //^^include this in my cardstack on the front end now 
             props.history.push('/home')
+            
         }
     }
-
 
     return (
        

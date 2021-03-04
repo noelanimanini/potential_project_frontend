@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react'
-// import NavBar from './NavBar'
+import NavBar from './NavBar'
 import Stack from './Stack'
 import {useEffect} from 'react'; 
 import {useSelector, useDispatch} from 'react-redux';
@@ -14,10 +14,8 @@ const Profile = () => {
         if (!user) {
             if (localStorage.token) {
                 persistUser(token)
-            }
-            
+            }  
         } 
-      
      })
 
      const persistUser = (token) => {
@@ -38,20 +36,24 @@ const Profile = () => {
             dispatch({
                 type: 'SET_USER',
                 user: {
-                    username: data.username,
-                    id: data.id
+                    username: data.user.username,
+                    id: data.user.id
                 }
             })
             dispatch({
                 type: 'SET_STACKS',
-                userStacks: data.card_stack
+                userStacks: data.user.card_stacks
+            })
+            dispatch({
+                type: 'SET_USER_BODY_PARTS',
+                userBodyParts: data.user.userBodyParts
             })
         }
     }
 
     return (
        <Fragment>
-           
+           <NavBar/>
            <Stack/>
        </Fragment>
     )

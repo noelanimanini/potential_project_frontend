@@ -1,15 +1,16 @@
 import React, {Fragment} from 'react'
-import {Grid, Card, CardContent, makeStyles , CardActions, Typography, Button, Menu, MenuItem} from '@material-ui/core'
+import {Grid, Card, CardContent, makeStyles , CardActions, Typography, Button, InputBase} from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add';
 import { useSelector,useDispatch} from 'react-redux';
-import ClearIcon from '@material-ui/icons/Clear';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import ModalStack from './modals/ModalStack';
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 
 const useStyles = makeStyles((theme) =>({
     root: {
       minWidth: 275,
-      padding: theme.spacing(1.5)
+      padding: theme.spacing(1.5),
+      margin: '2px'
     },
     title: {
       fontSize: 14,
@@ -23,21 +24,16 @@ const Stack = () => {
     const classes = useStyles();
     const paperStyle = {padding: 7, margin: '10px', display: 'flex', justifyContent: 'flex-end', borderStyle: 'dotted'}
     const cardStyle = {width: '50%', margin: '2%'}
-    const buttonStyle = {display: 'flex', justifyContent: 'center', position: 'relative', left: '280px'}
+    const buttonStyle = {display: 'flex'}
+    const trashStyle = {position: 'relative', left: '100px'}
     const dispatch = useDispatch()
     const user = useSelector(state => state.user)
     const userStacks = useSelector(state => state.userStacks)
     const [isOpenCard, setOpenCard] = useState(false)
     const [stack, setStack] = useState(null)
-    //
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
-    //
+    const userBodyParts = useSelector(state => state.userBodyParts)
+    // const [searchTerm, setSearchTerm] = useState('')
+    // const [searchResults, setSearchResults] = useState([])
 
     const stackClick = (e) => {
         e.persist()
@@ -61,13 +57,23 @@ const Stack = () => {
             type: 'ADD_STACK',
             newStack: newStack
         }))
-
     }
     
+    const changeStackForm = (data) => {
+        console.log(data)
+        dispatch({
+            type: 'FILTER_FORM', 
+            input: data
+        })
+        
+    }
+
+
     const renderStacks = () => {
+        console.log(userStacks)
        return userStacks.map( stack =>  (
-              <Grid id={stack.id}>
-                <Card className={classes.root} variant="outlined">
+            <Grid >
+                <Card className={classes.root} variant="outlined" id={stack.id}>
                     <CardContent>
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
                         {stack.title}
@@ -79,31 +85,20 @@ const Stack = () => {
                     </Typography>
                     </CardContent>
                     <CardActions>
-
-                    <Button onClick={handleClick}>See Stack</Button>
-                    <Menu 
-                    id="simple-menu"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}>
-
-                    <MenuItem onClick={() => handleLearn(stack)}>See Stack</MenuItem>
-                    <MenuItem onClick={() => handleDelete(stack)}>Delete Stack</MenuItem>
-
-                    </Menu>
+                        <Button onClick={() => handleLearn(stack)} color="secondary"> Edit Stack</Button>
+                        <Button onClick={() => handleDelete(stack)} style={trashStyle} ><DeleteOutlineIcon></DeleteOutlineIcon></Button>                  
                     </CardActions>
                 </Card>
-              </Grid>
+            </Grid>
+                  
+                
     ))}
 
     const handleLearn = (stack) => {
         setOpenCard(true)
         setStack(stack)
-        console.log(stack)
-       
+        console.log(stack)  
     }
-
 
     const handleDelete = (stack) => {
         console.log('it VERKS')
@@ -120,43 +115,44 @@ const Stack = () => {
             id: stack.id
         }))
     }
+
+    const handleChange = (e) => {
+        e.persist()
+        // setSearchTerm(e.target.value)
+    }
+
+    // useEffect(() => {
+    //     const results = userStacks.filter(stack => stack.toLowerCase().includes(searchTerm))
+    //     setSearchResults(results)
+    // }, [searchTerm])
     
     return (
         <Fragment>
             <Card style={paperStyle}>
             <Grid >
-                <div>
-                    <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                <div style={buttonStyle}>
+                    <InputBase 
+                    placeholder='search for stacks' 
+                    onChange={(e) => handleChange(e)}
+                    // value={searchTerm}
+                    />
+                    <Button onClick={(e) => stackClick(e)} >
                         <AddIcon></AddIcon>
                     </Button>
-                    <Menu 
-                    id="simple-menu"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}>
-                    
-                    <MenuItem onClick={(e) => stackClick(e)}>Create a Stack</MenuItem>
-                    </Menu>
-                    {/* <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                        <AddIcon></AddIcon>
-                    </Button>
-                    <Menu 
-                    id="simple-menu"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}>
-                    
-                    <MenuItem onClick={() => deleteStack()}>Delete a Stack</MenuItem>
-                    </Menu> */}
                 </div>
+                    
             </Grid>
         </Card>
 
         <div style={cardStyle}>
             {renderStacks() }
-            <ModalStack open={isOpenCard} onClose={() => setOpenCard(false)} cardInfo={stack}>
+            {/* <ul>
+                {searchResults.map(item => (
+                    <li>{item}</li>
+                ))}
+                
+            </ul> */}
+            <ModalStack open={isOpenCard} onClose={() => setOpenCard(false)} cardInfo={stack} setStack={setStack}changeStackForm={changeStackForm}>
               
             </ModalStack>
         </div>

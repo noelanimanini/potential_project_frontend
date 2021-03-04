@@ -1,7 +1,7 @@
  import React, {useEffect, Fragment} from 'react';
  import {useDispatch, useSelector} from 'react-redux'
  import BodyContainer from "./BodyContainer"
-//  import NavBar from './NavBar'
+ import NavBar from './NavBar'
 
  const Home = () => {
     const dispatch = useDispatch()
@@ -43,13 +43,17 @@
             dispatch({
                 type: 'SET_USER',
                 user: {
-                    username: data.username,
-                    id: data.id
+                    username: data.user.username,
+                    id: data.user.id
                 }
             })
             dispatch({
                 type: 'SET_STACKS',
-                userStacks: data.card_stack
+                userStacks: data.user.card_stacks
+            })
+            dispatch({
+                type: 'SET_USER_BODY_PARTS',
+                userBodyParts: data.user.userBodyParts
             })
         }
     }
@@ -71,7 +75,7 @@
        <Fragment>
 
            
-        
+            <NavBar/>
            <BodyContainer/>
        </Fragment>
             

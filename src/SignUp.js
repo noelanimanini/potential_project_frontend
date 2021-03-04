@@ -44,7 +44,12 @@ const SignUp = (props) => {
                     username: data.username,
                     id: data.id
                 }
+
             })
+            // dispatch({
+            //     type: 'SET_STACKS',
+            //     userStacks: data.user.card_stacks
+            // })
             props.history.push('/home')
         }
     }

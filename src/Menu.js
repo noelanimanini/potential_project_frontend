@@ -1,8 +1,8 @@
 import React from 'react';
-import {Button, ClickAwayListener, Grow, Paper, Popper, MenuList, MenuItem, Link} from '@material-ui/core';
+import {Button, ClickAwayListener, Grow, Paper, Popper, MenuList, MenuItem} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import {useDispatch } from 'react-redux'
-import {Redirect} from 'react-router-dom'
+import {Redirect, Link} from 'react-router-dom'
 // import Profile from './Profile'
 // import Avatar from '@material-ui/core/Avatar';
 // import menubutton from './menubutton.png'
@@ -82,10 +82,10 @@ const useStyles = makeStyles((theme) => ({
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <Link href='/profile'>
+                    <Link to='/profile'>
                       <MenuItem onClick={handleClose}>Profile</MenuItem>
                     </Link>
-                    <Link href='/account'>
+                    <Link to='/account'>
                       <MenuItem onClick={handleClose}>My Account</MenuItem>
                     </Link>
                     {!localStorage.token && <Redirect to="/login"/>}

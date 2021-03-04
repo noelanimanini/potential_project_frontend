@@ -24,8 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
     stack: {
         alignItems: 'center',
-        padding: theme.spacing(1.5),
-        width: '32%'
+        padding: '14px'
     }
   }));
 
@@ -34,10 +33,10 @@ const BodyContainer = () => {
     const dispatch = useDispatch()
     const bodyparts = useSelector(state => state.bodyparts)
     const card = useSelector(state => state.userStacks)
-    const divStyle = {display: 'flex'}
+    const divStyle = {display: 'flex', flexWrap: 'wrap'}
     const [isOpen, setIsOpen] = useState(false)
     const [part, setPart] = useState(null)
-
+    console.log(bodyparts)
     useEffect(() => {
         const token = localStorage.token;
         if (bodyparts.length === 0) {
@@ -118,11 +117,6 @@ const BodyContainer = () => {
                 </CardActions>
             </Card> */}
          </div> 
-        //  <div>
-        //      <Modal>
-
-        //      </Modal>
-        //  </div>
 
         
     )
