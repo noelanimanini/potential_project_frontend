@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, Typography, Menu, MenuItem, Input, TextField} from '@material-ui/core'
+import {Button, Typography, Menu, MenuItem, Input, TextField, CardActionArea, CardMedia} from '@material-ui/core'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import ReactDom from 'react-dom'
 import AddIcon from '@material-ui/icons/Add';
@@ -34,8 +34,8 @@ function ModalStack({open, onClose, cardInfo, changeStackForm, setStack}) {
     if (!open) return null
 
     const renderModal = () => {
-
-           return (
+        // debugger
+         return (
                <div style={MODAL_STYLES}>
                    <Typography>
                        Title: {cardInfo.title}
@@ -43,7 +43,12 @@ function ModalStack({open, onClose, cardInfo, changeStackForm, setStack}) {
                    <Typography>
                        Description: {cardInfo.description}
                    </Typography>
+                   <Typography>
+                      System: {cardFunction(cardInfo)}
+                   </Typography>
                    
+                    {/* {cardInfo.user_body_parts.map(part => part.body_part)} */}
+
                    <Button onClick={onClose}><HighlightOffIcon ></HighlightOffIcon></Button>
                    <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                         <AddIcon></AddIcon>
@@ -60,6 +65,17 @@ function ModalStack({open, onClose, cardInfo, changeStackForm, setStack}) {
                     
                </div>
            ) 
+
+    }
+
+    const cardFunction = (cardInfo) => {
+        return (
+         <div>
+             {cardInfo.user_body_parts.map(part => part.body_part.title)}
+             <img src={cardInfo.user_body_parts.map(part => part.body_part.image)} />
+             interactive link: {cardInfo.user_body_parts.map(part => part.body_part.link)}
+         </div>   
+        )
     }
    
     const handleEditForm = (cardInfo) => {

@@ -6,7 +6,6 @@ export const initialState = {
     userStacks: [],
     formTitleInput: '',
     formDescriptionInput: '',
-    userBodyParts: []
 }
 
 export const reducer = ( state = initialState, action ) => {
@@ -72,16 +71,24 @@ export const reducer = ( state = initialState, action ) => {
                     }
                 } )
             }
-        case 'SET_USER_BODY_PARTS':
-            return {
-                ...state, 
-                userBodyParts: action.userBodyParts
-            }
+        // case 'SET_USER_BODY_PARTS':
+        //     return {
+        //         ...state, 
+        //         userBodyParts: action.userBodyParts
+        //     }
         case 'GRAB_USER_BODY_PARTS':
+
             return {
                 ...state,
-                userBodyParts: [...state.userBodyParts, action.newUserBodyParts]
+                userStacks: state.userStacks.map(oldStack => {
+                    if (oldStack.id == action.newUserBodyPart.card_stack_id) {
+                        return {...oldStack, user_body_parts: [...oldStack.user_body_parts, action.newUserBodyPart]}
+                    } else {
+                        return oldStack
+                    }
+                })
             }
+
         case 'FILTER_FORM': 
             // let oldStack = state.userStacks.filter(stack => stack.id !== action.input.id)
             // debugger

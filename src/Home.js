@@ -51,10 +51,10 @@
                 type: 'SET_STACKS',
                 userStacks: data.user.card_stacks
             })
-            dispatch({
-                type: 'SET_USER_BODY_PARTS',
-                userBodyParts: data.user.userBodyParts
-            })
+            // dispatch({
+            //     type: 'SET_USER_BODY_PARTS',
+            //     userBodyParts: data.user.userBodyParts
+            // })
         }
     }
 

@@ -70,7 +70,6 @@ const Stack = () => {
 
 
     const renderStacks = () => {
-        console.log(userStacks)
        return userStacks.map( stack =>  (
             <Grid >
                 <Card className={classes.root} variant="outlined" id={stack.id}>
@@ -116,10 +115,10 @@ const Stack = () => {
         }))
     }
 
-    const handleChange = (e) => {
-        e.persist()
-        // setSearchTerm(e.target.value)
-    }
+    // const handleChange = (e) => {
+    //     e.persist()
+    //     // setSearchTerm(e.target.value)
+    // }
 
     // useEffect(() => {
     //     const results = userStacks.filter(stack => stack.toLowerCase().includes(searchTerm))
@@ -131,11 +130,10 @@ const Stack = () => {
             <Card style={paperStyle}>
             <Grid >
                 <div style={buttonStyle}>
-                    <InputBase 
+                    {/* <InputBase 
                     placeholder='search for stacks' 
                     onChange={(e) => handleChange(e)}
-                    // value={searchTerm}
-                    />
+                    /> */}
                     <Button onClick={(e) => stackClick(e)} >
                         <AddIcon></AddIcon>
                     </Button>

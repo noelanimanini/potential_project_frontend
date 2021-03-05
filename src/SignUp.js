@@ -46,6 +46,10 @@ const SignUp = (props) => {
                 }
 
             })
+            dispatch({
+                type: 'SET_STACKS',
+                userStacks: data.user.card_stacks
+            })
             // dispatch({
             //     type: 'SET_STACKS',
             //     userStacks: data.user.card_stacks
