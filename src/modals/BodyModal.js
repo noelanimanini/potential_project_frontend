@@ -4,7 +4,6 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import AddBoxTwoToneIcon from "@material-ui/icons/AddBoxTwoTone";
 import ReactDom from "react-dom";
 import { useSelector, useDispatch } from "react-redux";
-import RenderCards from "../RenderCards";
 import { useEffect } from "react";
 // import BodyPopUp from '../BodyPopUp'
 
@@ -91,24 +90,7 @@ function BodyModal({ open, onClose, bodypart, card }) {
 
   return ReactDom.createPortal(
     <>
-      {/* <div style={OVERLAY_STYLE} id={bodyPartID}/> */}
       <li>{renderModal()}</li>
-      {/* <div style={MODAL_STYLES} id={bodyPartID}>
-            <CardActionArea>
-                    <CardMedia
-                        image={image}
-                        title={title}
-                        />
-            </CardActionArea>
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                        {title}
-                </Typography>
-            </CardContent>
-            <Button onClick={onClose}><HighlightOffIcon style={buttonStyle}></HighlightOffIcon></Button>
-            <Button onClick={(e) => handleClick(e)}><AddBoxTwoToneIcon></AddBoxTwoToneIcon></Button> 
-            </div>
-        */}
     </>,
     document.getElementById("portal")
   );

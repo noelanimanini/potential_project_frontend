@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDom from "react-dom";
+import { Button } from "@material-ui/core";
 
 const MODAL_STYLES = {
   position: "fixed",
@@ -19,7 +20,7 @@ function BodyPopUp({ open, onClose, bodypart }) {
   console.log(bodypart);
   return ReactDom.createPortal(
     <div style={MODAL_STYLES}>
-      <button onClick={onClose}>close</button>
+      <Button onClick={onClose}>close</Button>
       {/* <span
         data-trigger="popup"
         data-location="left"
