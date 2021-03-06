@@ -1,11 +1,10 @@
 import React from "react";
-import { Button, Typography, Menu, MenuItem } from "@material-ui/core";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import { Button, Menu, MenuItem, Card } from "@material-ui/core";
 import AddBoxTwoToneIcon from "@material-ui/icons/AddBoxTwoTone";
 import ReactDom from "react-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-// import BodyPopUp from '../BodyPopUp'
+import { useDispatch } from "react-redux";
+import BodyPopUp from "../BodyPopUp";
+import { useState } from "react";
 
 const MODAL_STYLES = {
   position: "fixed",
@@ -13,16 +12,40 @@ const MODAL_STYLES = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   backgroundColor: "#FFF",
-  padding: "84px",
+  padding: "14px",
   zIndex: 1000,
   borderRadius: "10px",
-  borderStyle: "dotted",
+};
+
+const OVERLAY_STYLE = {
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: "rgba(0,0,0,.7)",
+  zIndex: 1000,
 };
 
 function BodyModal({ open, onClose, bodypart, card }) {
-  const buttonStyle = { display: "flex" };
+  const imageStyle = {
+    height: "300px",
+    maxWidth: "400",
+    display: "block",
+    overFlow: "hidden",
+  };
+  const buttonStyle = { position: "relative", right: "2px" };
+  const buttonStyle2 = { position: "relative", left: "200px" };
+  const containerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    maxWidth: "400",
+    flexGrow: 1,
+  };
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [info, setInfo] = useState(null);
+  const [isExtended, setIsExtended] = useState(false);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -32,33 +55,42 @@ function BodyModal({ open, onClose, bodypart, card }) {
   //
   if (!open) return null;
 
+  const handlePopUp = (part) => {
+    setIsExtended(true);
+    setInfo(part);
+  };
+
   const renderModal = () => {
     return (
-      <div style={MODAL_STYLES} id={bodypart.id}>
-        {bodypart.title}
-        <img src={bodypart.image} />
+      <div style={OVERLAY_STYLE}>
+        <Card style={MODAL_STYLES} id={bodypart.id}>
+          <Button onClick={onClose} style={buttonStyle}>
+            close
+          </Button>
+          <Button onClick={() => handlePopUp(bodypart)}>Learn More</Button>
+          <Button onClick={handleClick}>
+            <AddBoxTwoToneIcon></AddBoxTwoToneIcon>
+          </Button>
 
-        <Button onClick={onClose}>
-          <HighlightOffIcon style={buttonStyle}></HighlightOffIcon>
-        </Button>
-
-        <Button onClick={handleClick}>
-          <AddBoxTwoToneIcon></AddBoxTwoToneIcon>
-        </Button>
-
-        <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          {card.map((cardTitle) => (
-            <MenuItem onClick={(e) => handleItem(e, bodypart, cardTitle)}>
-              {cardTitle.title}
-            </MenuItem>
-          ))}
-        </Menu>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            {card.map((cardTitle) => (
+              <MenuItem onClick={(e) => handleItem(e, bodypart, cardTitle)}>
+                {cardTitle.title}
+              </MenuItem>
+            ))}
+          </Menu>
+          <div style={containerStyle}>
+            <h2>{bodypart.title}</h2>
+            <img src={bodypart.image} alt="body part" style={imageStyle} />
+            <div>{/* <CardStepper bodypart={bodypart} /> */}</div>
+          </div>
+        </Card>
       </div>
     );
   };
@@ -89,9 +121,14 @@ function BodyModal({ open, onClose, bodypart, card }) {
   };
 
   return ReactDom.createPortal(
-    <>
-      <li>{renderModal()}</li>
-    </>,
+    <div>
+      {renderModal()}
+      <BodyPopUp
+        bodypart={info}
+        open={isExtended}
+        onClose={() => setIsExtended(false)}
+      />
+    </div>,
     document.getElementById("portal")
   );
 }

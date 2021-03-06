@@ -1,19 +1,15 @@
 import React, { Fragment } from "react";
 import {
-  Grid,
   Card,
-  CardContent,
   makeStyles,
   CardActions,
   Typography,
   Button,
-  InputBase,
 } from "@material-ui/core";
-// import AddIcon from "@material-ui/icons/Add";
 import { useSelector, useDispatch } from "react-redux";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import ModalStack from "./modals/ModalStack";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import SearchBar from "./SearchBar";
 
 const useStyles = makeStyles((theme) => ({
@@ -32,49 +28,17 @@ const useStyles = makeStyles((theme) => ({
 
 const Stack = () => {
   const classes = useStyles();
-  // const paperStyle = {
-  //   padding: 7,
-  //   margin: "10px",
-  //   display: "flex",
-  //   justifyContent: "flex-end",
-  //   borderStyle: "dotted",
-  // };
   const cardStyle = { width: "50%", margin: "2%" };
-  // const buttonStyle = { display: "flex" };
   const trashStyle = { position: "relative", left: "100px" };
   const dispatch = useDispatch();
-  // const user = useSelector((state) => state.user);
+
   const userStacks = useSelector((state) => state.userStacks);
   const [isOpenCard, setOpenCard] = useState(false);
   const [stack, setStack] = useState(null);
 
-  // const stackClick = (e) => {
-  //   e.persist();
-  //   console.log(user);
-  //   const token = localStorage.token;
-  //   fetch("http://localhost:3000/card_stacks", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //     body: JSON.stringify({
-  //       title: "Stack",
-  //       user_id: user.id,
-  //       description: "new stack",
-  //     }),
-  //   })
-  //     .then((response) => response.json())
-  //     .then((newStack) =>
-  //       dispatch({
-  //         type: "ADD_STACK",
-  //         newStack: newStack,
-  //       })
-  //     );
-  // };
+  console.log(userStacks);
 
   const changeStackForm = (data) => {
-    console.log(data);
     dispatch({
       type: "FILTER_FORM",
       input: data,
@@ -83,44 +47,29 @@ const Stack = () => {
 
   const renderStacks = () => {
     return userStacks.map((stack) => (
-      <Grid>
-        <Card className={classes.root} variant="outlined" id={stack.id}>
-          <CardContent>
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              gutterBottom
-            >
-              {stack.title}
-            </Typography>
-
-            <Typography variant="body2" component="p">
-              {stack.description}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button onClick={() => handleLearn(stack)} color="secondary">
-              {" "}
-              Edit Stack
-            </Button>
-            <Button onClick={() => handleDelete(stack)} style={trashStyle}>
-              <DeleteOutlineIcon></DeleteOutlineIcon>
-            </Button>
-          </CardActions>
-        </Card>
-      </Grid>
+      <Card className={classes.root} variant="outlined" id={stack.id}>
+        <div>
+          <Typography> Title: {stack.title}</Typography>
+          <Typography> Description: {stack.description}</Typography>
+        </div>
+        <CardActions>
+          <Button onClick={() => handleLearn(stack)} color="secondary">
+            Edit Stack
+          </Button>
+          <Button onClick={() => handleDelete(stack)} style={trashStyle}>
+            <DeleteOutlineIcon></DeleteOutlineIcon>
+          </Button>
+        </CardActions>
+      </Card>
     ));
   };
 
   const handleLearn = (stack) => {
     setOpenCard(true);
     setStack(stack);
-    console.log(stack);
   };
 
   const handleDelete = (stack) => {
-    console.log("it VERKS");
-    console.log(stack);
     const token = localStorage.token;
     fetch(`http://localhost:3000/card_stacks/${stack.id}`, {
       method: "DELETE",
@@ -138,19 +87,6 @@ const Stack = () => {
 
   return (
     <Fragment>
-      {/* <Card style={paperStyle}>
-        <Grid>
-          <div style={buttonStyle}> */}
-      {/* <InputBase 
-                    placeholder='search for stacks' 
-                    onChange={(e) => handleChange(e)}
-                    /> */}
-      {/* <Button onClick={(e) => stackClick(e)}>
-              <AddIcon></AddIcon>
-            </Button>
-          </div>
-        </Grid>
-      </Card> */}
       <SearchBar />
       <div style={cardStyle}>
         {renderStacks()}

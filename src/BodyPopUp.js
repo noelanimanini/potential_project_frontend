@@ -11,7 +11,16 @@ const MODAL_STYLES = {
   padding: "84px",
   zIndex: 1000,
   borderRadius: "10px",
-  borderStyle: "dotted",
+};
+
+const OVERLAY_STYLE = {
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: "rgba(0,0,0,.7)",
+  zIndex: 1000,
 };
 
 function BodyPopUp({ open, onClose, bodypart }) {
@@ -19,21 +28,17 @@ function BodyPopUp({ open, onClose, bodypart }) {
 
   console.log(bodypart);
   return ReactDom.createPortal(
-    <div style={MODAL_STYLES}>
-      <Button onClick={onClose}>close</Button>
-      {/* <span
-        data-trigger="popup"
-        data-location="left"
-        data-target="ulcers"
-      ></span> */}
+    <div style={OVERLAY_STYLE}>
+      <div style={MODAL_STYLES}>
+        <Button onClick={onClose}>close</Button>
+        <div className="human-popup" id="ulcers">
+          <div className="header">
+            {/* <span className="close-btn">&times;</span> */}
+          </div>
 
-      <div className="human-popup" id="ulcers">
-        <div className="header">
-          {/* <span className="close-btn">&times;</span> */}
+          <iframe height="350" width="350" src={bodypart.link}></iframe>
+          <div className="arrow"></div>
         </div>
-
-        <iframe height="350" width="350" src={bodypart.link}></iframe>
-        <div className="arrow"></div>
       </div>
     </div>,
     document.getElementById("window")

@@ -1,20 +1,11 @@
 import React from "react";
-import {
-  Button,
-  Typography,
-  Menu,
-  MenuItem,
-  Input,
-  TextField,
-  CardActionArea,
-  CardMedia,
-} from "@material-ui/core";
+import { Button, Typography, Menu, MenuItem } from "@material-ui/core";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import ReactDom from "react-dom";
 import AddIcon from "@material-ui/icons/Add";
 import ModalForm from "./ModalForm";
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import AccordionModal from "./AccordionModal";
 
 const MODAL_STYLES = {
   position: "fixed",
@@ -28,10 +19,9 @@ const MODAL_STYLES = {
   borderStyle: "dotted",
 };
 
-function ModalStack({ open, onClose, cardInfo, changeStackForm, setStack }) {
+function ModalStack({ open, onClose, cardInfo, setStack }) {
   const [openEdit, setOpenEdit] = useState(false);
-  const modalStyle = { height: "50vh", width: "50vh" };
-  //
+  console.log(cardInfo);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -41,16 +31,12 @@ function ModalStack({ open, onClose, cardInfo, changeStackForm, setStack }) {
   };
 
   if (!open) return null;
-
   const renderModal = () => {
-    // debugger
     return (
       <div style={MODAL_STYLES}>
-        <Typography>Title: {cardInfo.title}</Typography>
-        <Typography>Description: {cardInfo.description}</Typography>
-        <Typography>System: {cardFunction(cardInfo)}</Typography>
-
-        {/* {cardInfo.user_body_parts.map(part => part.body_part)} */}
+        {cardInfo.user_body_parts.map((bodypart) => (
+          <AccordionModal bodypart={bodypart} />
+        ))}
 
         <Button onClick={onClose}>
           <HighlightOffIcon></HighlightOffIcon>
@@ -70,21 +56,9 @@ function ModalStack({ open, onClose, cardInfo, changeStackForm, setStack }) {
           onClose={handleClose}
         >
           <MenuItem onClick={() => handleEditForm(cardInfo)}>
-            Edit Stack
+            Stack Notes
           </MenuItem>
         </Menu>
-      </div>
-    );
-  };
-
-  const cardFunction = (cardInfo) => {
-    return (
-      <div>
-        {cardInfo.user_body_parts.map((part) => part.body_part.title)}
-        <iframe
-          style={modalStyle}
-          src={cardInfo.user_body_parts.map((part) => part.body_part.link)}
-        ></iframe>
       </div>
     );
   };
@@ -93,7 +67,6 @@ function ModalStack({ open, onClose, cardInfo, changeStackForm, setStack }) {
     console.log(cardInfo);
     setOpenEdit(true);
     handleClose();
-    console.log(openEdit);
   };
 
   return ReactDom.createPortal(
@@ -106,7 +79,6 @@ function ModalStack({ open, onClose, cardInfo, changeStackForm, setStack }) {
           setOpenEdit={setOpenEdit}
           setStack={setStack}
           renderModal={renderModal()}
-          changeStackForm={changeStackForm}
         />
       </li>
     </div>,

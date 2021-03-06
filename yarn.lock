@@ -9553,6 +9553,11 @@
     "regenerator-runtime" "^0.13.7"
     "whatwg-fetch" "^3.4.1"
 
+"react-bootstrap-carousel@^4.1.1":
+  "integrity" "sha512-nlkmx33jclOfEi1lAfFRRiDO5F2u4D03dbIhvrFPiUoiKgkMngeSZMFg6gY/sQPAhv3pQqhti5evoVgZMFaV2g=="
+  "resolved" "https://registry.npmjs.org/react-bootstrap-carousel/-/react-bootstrap-carousel-4.1.1.tgz"
+  "version" "4.1.1"
+
 "react-bootstrap@^1.5.0":
   "integrity" "sha512-t1o4kP3coj2HIaBepJxGAc7HZ1fWGria/s0Yr9JUmNkCilyrnXtK209qn28vuZ4muhnA0uR0GMMXAMrLsLyiIw=="
   "resolved" "https://registry.npmjs.org/react-bootstrap/-/react-bootstrap-1.5.0.tgz"
