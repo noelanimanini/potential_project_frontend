@@ -16,7 +16,16 @@ const MODAL_STYLES = {
   padding: "84px",
   zIndex: 1000,
   borderRadius: "10px",
-  borderStyle: "dotted",
+};
+
+const OVERLAY_STYLE = {
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: "rgba(0,0,0,.7)",
+  zIndex: 1000,
 };
 
 function ModalStack({ open, onClose, cardInfo, setStack }) {
@@ -33,32 +42,34 @@ function ModalStack({ open, onClose, cardInfo, setStack }) {
   if (!open) return null;
   const renderModal = () => {
     return (
-      <div style={MODAL_STYLES}>
-        {cardInfo.user_body_parts.map((bodypart) => (
-          <AccordionModal bodypart={bodypart} />
-        ))}
+      <div style={OVERLAY_STYLE}>
+        <div style={MODAL_STYLES}>
+          {cardInfo.user_body_parts.map((bodypart) => (
+            <AccordionModal bodypart={bodypart} />
+          ))}
 
-        <Button onClick={onClose}>
-          <HighlightOffIcon></HighlightOffIcon>
-        </Button>
-        <Button
-          aria-controls="simple-menu"
-          aria-haspopup="true"
-          onClick={handleClick}
-        >
-          <AddIcon></AddIcon>
-        </Button>
-        <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          <MenuItem onClick={() => handleEditForm(cardInfo)}>
-            Stack Notes
-          </MenuItem>
-        </Menu>
+          <Button onClick={onClose}>
+            <HighlightOffIcon></HighlightOffIcon>
+          </Button>
+          <Button
+            aria-controls="simple-menu"
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            <AddIcon></AddIcon>
+          </Button>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={() => handleEditForm(cardInfo)}>
+              Stack Notes
+            </MenuItem>
+          </Menu>
+        </div>
       </div>
     );
   };

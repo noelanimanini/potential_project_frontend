@@ -6,6 +6,7 @@ export const initialState = {
   userStacks: [],
   formTitleInput: "",
   formDescriptionInput: "",
+  studyGroups: [],
 };
 
 export const reducer = (state = initialState, action) => {
@@ -108,6 +109,11 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         userStacks: state.userStacks.filter((stack) => stack.id !== action.id),
+      };
+    case "SET_STUDY_GROUPS":
+      return {
+        ...state,
+        studyGroups: action.studyGroups,
       };
 
     default:

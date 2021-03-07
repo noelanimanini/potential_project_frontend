@@ -44,6 +44,10 @@ const Home = () => {
         type: "SET_STACKS",
         userStacks: data.user.card_stacks,
       });
+      dispatch({
+        type: "SET_STUDY_GROUPS",
+        studyGroups: data.user.study_groups,
+      });
     }
   };
 

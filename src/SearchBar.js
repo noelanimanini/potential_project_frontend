@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Card, Button } from "@material-ui/core";
+import { Card, Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -12,7 +12,8 @@ function SearchBar() {
     margin: "10px",
     display: "flex",
     justifyContent: "flex-end",
-    borderStyle: "dotted",
+    backgroundColor: "#EEE2DC",
+    opacity: "45%",
   };
 
   const stackClick = (e) => {
@@ -41,17 +42,15 @@ function SearchBar() {
   };
   return (
     <Card style={paperStyle}>
-      <Grid>
-        <div style={buttonStyle}>
-          {/* <InputBase 
+      <div style={buttonStyle}>
+        {/* <InputBase 
                     placeholder='search for stacks' 
                     onChange={(e) => handleChange(e)}
                     /> */}
-          <Button onClick={(e) => stackClick(e)}>
-            <AddIcon></AddIcon>
-          </Button>
-        </div>
-      </Grid>
+        <Button onClick={(e) => stackClick(e)}>
+          <AddIcon></AddIcon>
+        </Button>
+      </div>
     </Card>
   );
 }

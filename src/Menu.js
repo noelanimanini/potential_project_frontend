@@ -24,7 +24,8 @@ export default function Menu() {
     <div onClick={toggleDrawer(false)}>
       <List>
         <ListItem>{<Link to="/profile">Profile</Link>}</ListItem>
-        <ListItem>{<Link to="/account">Account</Link>}</ListItem>
+        <ListItem>{<Link to="/study_groups">Study Groups</Link>}</ListItem>
+        <ListItem>{<Link to="/account">Settings</Link>}</ListItem>
         {!localStorage.token && <Redirect to="/login" />}
         <ListItem button onClick={handleLogout}>
           Logout

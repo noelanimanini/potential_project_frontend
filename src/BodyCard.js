@@ -4,12 +4,9 @@ import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
 import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
 import { Grid } from "@material-ui/core";
 import BodyModal from "./modals/BodyModal";
-import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,19 +51,20 @@ function BodyCard() {
               className={classes.media}
               image={part.image}
               title={part.title}
+              onClick={() => handleClick(part)}
             />
           </CardActionArea>
-          <CardActions>
+          {/* <CardActions>
             <Button
               size="small"
               color="primary"
-              onClick={() => handleClick(part)}
+              
             >
               Stack
-            </Button>
+            </Button> */}
 
-            {/* <Button onClick={() => handlePopUp(part)}>Learn More</Button> */}
-          </CardActions>
+          {/* <Button onClick={() => handlePopUp(part)}>Learn More</Button> */}
+          {/* </CardActions> */}
         </Card>
       </Grid>
     ));
