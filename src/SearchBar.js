@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Button } from "@material-ui/core";
+import { Card, Button, Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -15,6 +15,7 @@ function SearchBar() {
     backgroundColor: "#EEE2DC",
     opacity: "45%",
   };
+  const wordStyle = { position: "fixed", right: "80px", top: "76.5px" };
 
   const stackClick = (e) => {
     e.persist();
@@ -42,6 +43,7 @@ function SearchBar() {
   };
   return (
     <Card style={paperStyle}>
+      <Typography style={wordStyle}>create a stack</Typography>
       <div style={buttonStyle}>
         {/* <InputBase 
                     placeholder='search for stacks' 

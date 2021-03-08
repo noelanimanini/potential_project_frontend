@@ -6,6 +6,7 @@ import AddIcon from "@material-ui/icons/Add";
 import ModalForm from "./ModalForm";
 import { useState } from "react";
 import AccordionModal from "./AccordionModal";
+import { useDispatch } from "react-redux";
 
 const MODAL_STYLES = {
   position: "fixed",
@@ -29,68 +30,57 @@ const OVERLAY_STYLE = {
 };
 
 function ModalStack({ open, onClose, cardInfo, setStack }) {
-  const [openEdit, setOpenEdit] = useState(false);
-  console.log(cardInfo);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
+  const dispatch = useDispatch();
+  if (!open) return null;
+
+  const handleDelete = (bodypart) => {
+    const token = localStorage.token;
+    fetch(`http://localhost:3000/user_body_parts/${bodypart.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }).then(() => {
+      let newBodyParts = cardInfo.user_body_parts.filter(
+        (BP) => BP.id !== bodypart.id
+      );
+      cardInfo.user_body_parts = newBodyParts;
+      setStack(cardInfo);
+      dispatch({
+        type: "DELETE_JOIN_CARD_STACK",
+        id: bodypart.id,
+      });
+    });
   };
 
-  if (!open) return null;
   const renderModal = () => {
     return (
       <div style={OVERLAY_STYLE}>
         <div style={MODAL_STYLES}>
           {cardInfo.user_body_parts.map((bodypart) => (
-            <AccordionModal bodypart={bodypart} />
+            <AccordionModal bodypart={bodypart} handleDelete={handleDelete} />
           ))}
 
           <Button onClick={onClose}>
             <HighlightOffIcon></HighlightOffIcon>
           </Button>
-          <Button
-            aria-controls="simple-menu"
-            aria-haspopup="true"
-            onClick={handleClick}
-          >
-            <AddIcon></AddIcon>
-          </Button>
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={() => handleEditForm(cardInfo)}>
-              Stack Notes
-            </MenuItem>
-          </Menu>
         </div>
       </div>
     );
-  };
-
-  const handleEditForm = (cardInfo) => {
-    console.log(cardInfo);
-    setOpenEdit(true);
-    handleClose();
   };
 
   return ReactDom.createPortal(
     <div>
       <li>
         {renderModal()}
-        <ModalForm
+        {/* <ModalForm
           open={openEdit}
           cardInfo={cardInfo}
           setOpenEdit={setOpenEdit}
           setStack={setStack}
           renderModal={renderModal()}
-        />
+        /> */}
       </li>
     </div>,
 

@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionActions from "@material-ui/core/AccordionActions";
-import Typography from "@material-ui/core/Typography";
+import { Typography, TextField } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
@@ -47,26 +47,46 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function AccordionModal({ bodypart }) {
+function AccordionModal({ bodypart, handleDelete }) {
   const classes = useStyles();
   const imageStyle = { height: "20vh" };
   const dispatch = useDispatch();
 
-  const handleDelete = (bodypart) => {
-    const token = localStorage.token;
-    fetch(`http://localhost:3000/user_body_parts/${bodypart.id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }).then(() =>
-      dispatch({
-        type: "DELETE_JOIN_CARD_STACK",
-        id: bodypart.id,
-      })
-    );
-  };
+  // const handleDelete = (bodypart) => {
+  //   const token = localStorage.token;
+  //   fetch(`http://localhost:3000/user_body_parts/${bodypart.id}`, {
+  //     method: "DELETE",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   }).then(() => {
+  //     dispatch({
+  //       type: "DELETE_JOIN_CARD_STACK",
+  //       id: bodypart.id,
+  //     });
+  //   });
+  // };
+
+  // const editNotes = (e, bodypart) => {
+  //   e.preventDefault();
+  //   const token = localStorage.token;
+
+  //   fetch(`http://localhost:3000/user_body_parts/${bodypart.id}`, {
+  //     method: "PATCH",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //     body: {
+
+  //     }
+  //   })
+
+  // const editNotes = (bodypart) => {
+  //   setIsOpen(true);
+  //   setBodyInfo(bodypart);
+  // };
 
   return (
     <div className={classes.root}>
@@ -79,14 +99,12 @@ function AccordionModal({ bodypart }) {
           <Typography>{bodypart.body_part.title}</Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.details}>
-          <div>put stuff here if you wanna</div>
           <div className={classes.column} />
-          <div className={clsx(classes.column, classes.helper)}>
-            <Typography>
-              <img src={bodypart.body_part.image} style={imageStyle} />
-              {/* {cardInfo.user_body_parts[0].body_part.title} */}
-            </Typography>
-          </div>
+          <Typography>
+            <img src={bodypart.body_part.image} style={imageStyle} />
+            {/* {cardInfo.user_body_parts[0].body_part.title} */}
+          </Typography>
+          <div className={clsx(classes.column, classes.helper)}></div>
         </AccordionDetails>
         <Divider />
         <AccordionActions>
@@ -96,9 +114,16 @@ function AccordionModal({ bodypart }) {
           <Button size="small" color="primary">
             {<Link to="/study_groups">Study Groups</Link>}
           </Button>
+          {/* <Button size="small" onClick={editNotes(bodypart)}>
+            Edit Notes
+          </Button> */}
         </AccordionActions>
       </Accordion>
     </div>
+    // <div>
+    //   <BodyPopUp2/>
+
+    // </div>
   );
 }
 

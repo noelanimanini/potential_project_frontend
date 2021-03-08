@@ -5,7 +5,7 @@ import history from "./history";
 import SignUp from "./SignUp";
 import Home from "./Home";
 import Profile from "./Profile";
-import StudyGroup from "./StudyGroup";
+import MyStudyGroup from "./MyStudyGroup";
 import Account from "./Account";
 
 function App() {
@@ -35,18 +35,13 @@ function App() {
           />
           <Route
             exact
-            path="/studygroup"
-            component={(props) => <StudyGroup {...props} />}
-          />
-          <Route
-            exact
             path="/account"
             component={(props) => <Account {...props} />}
           />
           <Route
             exact
             path="/study_groups"
-            component={(props) => <StudyGroup {...props} />}
+            component={(props) => <MyStudyGroup {...props} />}
           />
         </Switch>
       </Router>

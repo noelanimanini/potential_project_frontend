@@ -20,6 +20,8 @@ const useStyles = makeStyles((theme) => ({
   stack: {
     alignItems: "center",
     padding: "14px",
+    height: "30vh",
+    width: "11em",
   },
 }));
 

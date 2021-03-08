@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import ModalForm from "./modals/ModalForm";
 import ModalStack from "./modals/ModalStack";
 import { useState } from "react";
 import SearchBar from "./SearchBar";
@@ -34,27 +35,30 @@ const Stack = () => {
 
   const userStacks = useSelector((state) => state.userStacks);
   const [isOpenCard, setOpenCard] = useState(false);
+  const [isOpenStack, setOpenStack] = useState(false);
   const [stack, setStack] = useState(null);
 
-  console.log(userStacks);
+  console.log("this is the userStacks", userStacks);
 
-  const changeStackForm = (data) => {
-    dispatch({
-      type: "FILTER_FORM",
-      input: data,
-    });
-  };
+  // const changeStackForm = (data) => {
+  //   dispatch({
+  //     type: "FILTER_FORM",
+  //     input: data,
+  //   });
 
   const renderStacks = () => {
     return userStacks.map((stack) => (
       <Card className={classes.root} variant="outlined" id={stack.id}>
         <div>
-          <Typography> Title: {stack.title}</Typography>
-          <Typography> Description: {stack.description}</Typography>
+          <Typography> {stack.title}</Typography>
+          <Typography> {stack.description}</Typography>
         </div>
         <CardActions>
           <Button onClick={() => handleLearn(stack)} color="secondary">
             Edit Stack
+          </Button>
+          <Button onClick={() => handleStack(stack)} color="secondary">
+            See Stack
           </Button>
           <Button onClick={() => handleDelete(stack)} style={trashStyle}>
             <DeleteOutlineIcon></DeleteOutlineIcon>
@@ -69,6 +73,11 @@ const Stack = () => {
     setStack(stack);
   };
 
+  const handleStack = (stack) => {
+    setOpenStack(true);
+    setStack(stack);
+  };
+
   const handleDelete = (stack) => {
     const token = localStorage.token;
     fetch(`http://localhost:3000/card_stacks/${stack.id}`, {
@@ -77,12 +86,12 @@ const Stack = () => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    }).then(() =>
+    }).then(() => {
       dispatch({
         type: "DELETE_STACK",
         id: stack.id,
-      })
-    );
+      });
+    });
   };
 
   return (
@@ -91,13 +100,25 @@ const Stack = () => {
       <div style={cardStyle}>
         {renderStacks()}
 
+        <ModalForm
+          open={isOpenCard}
+          onClose={() => setOpenCard(false)}
+          cardInfo={stack}
+          setStack={setStack}
+        />
         <ModalStack
+          open={isOpenStack}
+          onClose={() => setOpenStack(false)}
+          cardInfo={stack}
+          setStack={setStack}
+        />
+        {/* <ModalStack
           open={isOpenCard}
           onClose={() => setOpenCard(false)}
           cardInfo={stack}
           setStack={setStack}
           changeStackForm={changeStackForm}
-        ></ModalStack>
+        ></ModalStack> */}
       </div>
     </Fragment>
   );

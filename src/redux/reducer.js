@@ -6,7 +6,12 @@ export const initialState = {
   userStacks: [],
   formTitleInput: "",
   formDescriptionInput: "",
+  formNotesComment: "",
   studyGroups: [],
+  studyGroupNameInput: "",
+  studyGroupDescriptionInput: "",
+  studyGroupDate: "",
+  addedStudyGroups: null,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -57,6 +62,26 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         formDescriptionInput: action.value,
+      };
+    case "CHANGE_NOTES_INPUT":
+      return {
+        ...state,
+        formNotesComment: action.value,
+      };
+    case "STUDY_GROUP_NAME":
+      return {
+        ...state,
+        studyGroupNameInput: action.value,
+      };
+    case "STUDY_GROUP_DESCRIPTION":
+      return {
+        ...state,
+        studyGroupDescriptionInput: action.value,
+      };
+    case "STUDY_DATE":
+      return {
+        ...state,
+        studyGroupDate: action.value,
       };
     case "SET_FORM":
       console.log(action);
@@ -114,6 +139,11 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         studyGroups: action.studyGroups,
+      };
+    case "ADD_STUDY_GROUPS":
+      return {
+        ...state,
+        studyGroups: [...state.studyGroups, action.studygroup],
       };
 
     default:

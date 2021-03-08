@@ -52,6 +52,10 @@ const Login = (props) => {
         userStacks: data.user.card_stacks,
       });
       // dispatch({
+      //   type: "SET_STUDY_GROUPS",
+      //   studyGroups: data.user.study_groups,
+      // });
+      // dispatch({
       //     type: 'SET_USER_BODY_PARTS',
       //     userBodyParts: data.userBodyParts
       // })
