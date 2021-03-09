@@ -50,10 +50,7 @@ const SignUp = (props) => {
       localStorage.token = token;
       dispatch({
         type: "SET_USER",
-        user: {
-          username: data.username,
-          id: data.id,
-        },
+        user: data.user,
       });
       dispatch({
         type: "SET_STACKS",

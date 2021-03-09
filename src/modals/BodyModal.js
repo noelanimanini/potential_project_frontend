@@ -1,6 +1,12 @@
 import React from "react";
-import { Button, Menu, MenuItem, Card } from "@material-ui/core";
-import AddBoxTwoToneIcon from "@material-ui/icons/AddBoxTwoTone";
+import {
+  Button,
+  Menu,
+  MenuItem,
+  Card,
+  CardActionArea,
+} from "@material-ui/core";
+import AddToPhotosOutlinedIcon from "@material-ui/icons/AddToPhotosOutlined";
 import ReactDom from "react-dom";
 import { useDispatch } from "react-redux";
 import BodyPopUp from "../BodyPopUp";
@@ -64,13 +70,15 @@ function BodyModal({ open, onClose, bodypart, card }) {
     return (
       <div style={OVERLAY_STYLE}>
         <Card style={MODAL_STYLES} id={bodypart.id}>
-          <Button onClick={onClose} style={buttonStyle}>
-            close
-          </Button>
-          <Button onClick={() => handlePopUp(bodypart)}>Learn More</Button>
-          <Button onClick={handleClick}>
-            <AddBoxTwoToneIcon></AddBoxTwoToneIcon>
-          </Button>
+          <CardActionArea
+            style={{ display: "flex", justifyContent: "space-between" }}
+          >
+            <Button onClick={onClose}>close</Button>
+            <Button onClick={() => handlePopUp(bodypart)}>Learn More</Button>
+            <Button onClick={handleClick}>
+              <AddToPhotosOutlinedIcon></AddToPhotosOutlinedIcon>
+            </Button>
+          </CardActionArea>
 
           <Menu
             id="simple-menu"
@@ -86,7 +94,7 @@ function BodyModal({ open, onClose, bodypart, card }) {
             ))}
           </Menu>
           <div style={containerStyle}>
-            <h2>{bodypart.title}</h2>
+            <h2 className="body-part-title">{bodypart.title}</h2>
             <img src={bodypart.image} alt="body part" style={imageStyle} />
             <div>{/* <CardStepper bodypart={bodypart} /> */}</div>
           </div>

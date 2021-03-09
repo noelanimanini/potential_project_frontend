@@ -31,9 +31,36 @@ export default function Menu() {
   const list = () => (
     <div onClick={toggleDrawer(false)}>
       <List>
-        <ListItem>{<Link to="/profile">Profile</Link>}</ListItem>
-        <ListItem>{<Link to="/study_groups">Study Groups</Link>}</ListItem>
-        <ListItem>{<Link to="/account">Settings</Link>}</ListItem>
+        <ListItem>
+          {
+            <Link
+              to="/profile"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              Profile
+            </Link>
+          }
+        </ListItem>
+        <ListItem>
+          {
+            <Link
+              to="/study_groups"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              Study Groups
+            </Link>
+          }
+        </ListItem>
+        <ListItem>
+          {
+            <Link
+              to="/account"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              Settings
+            </Link>
+          }
+        </ListItem>
         {!localStorage.token && <Redirect to="/login" />}
         <ListItem button onClick={handleLogout}>
           Logout

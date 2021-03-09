@@ -47,10 +47,7 @@ const Login = (props) => {
       localStorage.token = token;
       dispatch({
         type: "SET_USER",
-        user: {
-          username: data.user.username,
-          id: data.user.id,
-        },
+        user: data.user,
       });
       dispatch({
         type: "SET_STACKS",

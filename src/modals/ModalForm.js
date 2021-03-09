@@ -35,7 +35,8 @@ function ModalForm({ open, cardInfo, setOpenEdit, onClose, setStack }) {
   const formDescriptionInput = useSelector(
     (state) => state.formDescriptionInput
   );
-
+  const user = useSelector((state) => state.user);
+  console.log(user);
   if (!open) return null;
   const submitHandler = (e) => {
     e.preventDefault();
@@ -51,7 +52,7 @@ function ModalForm({ open, cardInfo, setOpenEdit, onClose, setStack }) {
         card_stack: {
           title: formTitleInput,
           description: formDescriptionInput,
-          user_id: cardInfo.user_id,
+          user_id: user.id,
         },
       }),
     })

@@ -62,7 +62,7 @@ function Account() {
         >
           <h2 className="account-info">Are you sure? </h2>
           <h4>you can't undo this action.</h4>
-          <Link to="/login">
+          <Link to="/login" style={{ textDecoration: "none", color: "black" }}>
             <Button onClick={() => handleDelete(user)}>Yes I'm sure</Button>
           </Link>
           <Button onClick={closeModal}>close</Button>
