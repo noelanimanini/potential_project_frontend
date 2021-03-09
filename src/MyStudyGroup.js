@@ -85,7 +85,6 @@ function StudyGroup() {
       <NavBar />
       <StudyBar />
       <StudyCard />
-      {/* {studyGroup()} */}
     </Fragment>
   );
 }

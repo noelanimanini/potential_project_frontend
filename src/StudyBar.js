@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Card, Button, Typography, TextField } from "@material-ui/core";
+import {
+  Card,
+  Button,
+  Typography,
+  TextField,
+  InputLabel,
+  Select,
+  FormControl,
+} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import Modal from "react-modal";
 import { makeStyles } from "@material-ui/core/styles";
@@ -52,7 +60,8 @@ function StudyBar() {
   const studyGroupDescriptionInput = useSelector(
     (state) => state.studyGroupDescriptionInput
   );
-  const studygroup = useSelector((state) => state.studyGroups);
+  const studyGroupSystem = useSelector((state) => state.studyGroupSystem);
+  const bodyparts = useSelector((state) => state.bodyparts);
   const classes = useStyles();
   var subtitle;
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -63,6 +72,13 @@ function StudyBar() {
   function closeModal() {
     setIsOpen(false);
   }
+
+  const handleChangeMultiple = (e) => {
+    dispatch({
+      type: "STUDY_SYSTEM",
+      value: e.target.value,
+    });
+  };
 
   const studyBar = () => {
     return (
@@ -75,6 +91,7 @@ function StudyBar() {
             </Button>
           </div>
         </Card>
+        <h4 className="study-group">Study Groups</h4>
       </div>
     );
   };
@@ -93,6 +110,7 @@ function StudyBar() {
           name: studyGroupNameInput,
           date: studyGroupDate,
           description: studyGroupDescriptionInput,
+          body_part_id: studyGroupSystem,
         },
       }),
     })
@@ -106,6 +124,7 @@ function StudyBar() {
   };
   //I can do payload instead of the action key. then every action will have a type and payload
 
+  console.log(bodyparts);
   return (
     <div>
       {studyBar()}
@@ -144,7 +163,7 @@ function StudyBar() {
             }
           />
           <TextField
-            label="What are we studying?"
+            label="Comments"
             onChange={(e) =>
               dispatch({
                 type: "STUDY_GROUP_DESCRIPTION",
@@ -152,6 +171,25 @@ function StudyBar() {
               })
             }
           />
+          <FormControl className={classes.formControl}>
+            <InputLabel shrink htmlFor="select-multiple-native">
+              Native
+            </InputLabel>
+            <Select
+              multiple
+              native
+              onChange={(e) => handleChangeMultiple(e)}
+              inputProps={{
+                id: "select-multiple-native",
+              }}
+            >
+              {bodyparts.map((bodypart) => (
+                <option key={bodypart.id} value={bodypart.id}>
+                  {bodypart.title}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
           <Button type="submit">Enter</Button>
         </form>
       </Modal>

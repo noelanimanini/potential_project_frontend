@@ -10,7 +10,12 @@ const Login = (props) => {
     padding: 20,
     height: "50vh",
     width: 280,
-    margin: "20px auto",
+    margin: "auto",
+    position: "relative",
+    top: "80px",
+  };
+  const paperStyle2 = {
+    height: "100vh",
   };
   const buttonStyle = { margin: "8px 0" };
   const usernameInput = useSelector((state) => state.usernameInput);
@@ -65,58 +70,60 @@ const Login = (props) => {
   };
 
   return (
-    <form>
-      <Grid>
-        <Paper elevation={20} style={paperStyle}>
-          <Grid align="center">
-            <img src={potential} alt="logo" />
-          </Grid>
-          <TextField
-            label="Username"
-            placeholder="Enter Username"
-            name="username"
-            fullWidth
-            required
-            onChange={(e) =>
-              dispatch({
-                type: "CHANGE_USERNAME_INPUT",
-                value: e.target.value,
-              })
-            }
-          />
-          <TextField
-            label="Password"
-            placeholder="Enter Password"
-            name="password"
-            type="password"
-            fullWidth
-            required
-            onChange={(e) =>
-              dispatch({
-                type: "CHANGE_PASSWORD_INPUT",
-                value: e.target.value,
-              })
-            }
-          />
-          <Button
-            type="submit"
-            value="submit"
-            background-color="white"
-            style={buttonStyle}
-            fullWidth
-            variant="contained"
-            onClick={(e) => handleSubmit(e)}
-          >
-            Sign In
-          </Button>
-          <Typography>
-            {" "}
-            Don't have an account?
-            <Link to="/signup">Sign Up</Link>
-          </Typography>
-        </Paper>
-      </Grid>
-    </form>
+    <div className="login-page">
+      <form>
+        <Grid style={paperStyle2}>
+          <Paper elevation={20} style={paperStyle}>
+            <Grid align="center">
+              <img src={potential} alt="logo" />
+            </Grid>
+            <TextField
+              label="Username"
+              placeholder="Enter Username"
+              name="username"
+              fullWidth
+              required
+              onChange={(e) =>
+                dispatch({
+                  type: "CHANGE_USERNAME_INPUT",
+                  value: e.target.value,
+                })
+              }
+            />
+            <TextField
+              label="Password"
+              placeholder="Enter Password"
+              name="password"
+              type="password"
+              fullWidth
+              required
+              onChange={(e) =>
+                dispatch({
+                  type: "CHANGE_PASSWORD_INPUT",
+                  value: e.target.value,
+                })
+              }
+            />
+            <Button
+              type="submit"
+              value="submit"
+              background-color="white"
+              style={buttonStyle}
+              fullWidth
+              variant="contained"
+              onClick={(e) => handleSubmit(e)}
+            >
+              Sign In
+            </Button>
+            <Typography>
+              {" "}
+              Don't have an account?
+              <Link to="/signup">Sign Up</Link>
+            </Typography>
+          </Paper>
+        </Grid>
+      </form>
+    </div>
   );
 };
 

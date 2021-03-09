@@ -2,10 +2,30 @@
   text-align: center;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
 
-/* .navbar {
-  padding: .3px;
-} */
+.login-page {
+  background-image: url("https://images.unsplash.com/photo-1611072321343-fbcc96ef795b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80");
 
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  height: 100%;
+}
 
+.study-group {
+  color: #bab2b5;
+  font-size: 30px;
+  font-family: "Pacifico", cursive;
+}
+
+.neuron-style {
+  width: 20px;
+  height: 20px;
+}
+
+.button-style {
+  position: fixed;
+  right: 4%;
+}

@@ -11,6 +11,7 @@ export const initialState = {
   studyGroupNameInput: "",
   studyGroupDescriptionInput: "",
   studyGroupDate: "",
+  studyGroupSystem: "",
   addedStudyGroups: null,
 };
 
@@ -83,6 +84,11 @@ export const reducer = (state = initialState, action) => {
         ...state,
         studyGroupDate: action.value,
       };
+    case "STUDY_SYSTEM":
+      return {
+        ...state,
+        studyGroupSystem: action.value,
+      };
     case "SET_FORM":
       console.log(action);
       return {
@@ -145,7 +151,13 @@ export const reducer = (state = initialState, action) => {
         ...state,
         studyGroups: [...state.studyGroups, action.studygroup],
       };
-
+    case "DELETE_STUDY_GROUP":
+      return {
+        ...state,
+        studyGroups: state.studyGroups.filter(
+          (group) => group.id !== action.id
+        ),
+      };
     default:
       return state;
   }

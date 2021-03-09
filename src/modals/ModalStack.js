@@ -72,16 +72,7 @@ function ModalStack({ open, onClose, cardInfo, setStack }) {
 
   return ReactDom.createPortal(
     <div>
-      <li>
-        {renderModal()}
-        {/* <ModalForm
-          open={openEdit}
-          cardInfo={cardInfo}
-          setOpenEdit={setOpenEdit}
-          setStack={setStack}
-          renderModal={renderModal()}
-        /> */}
-      </li>
+      <li>{renderModal()}</li>
     </div>,
 
     document.getElementById("portal")
