@@ -29,6 +29,12 @@ const OVERLAY_STYLE = {
   zIndex: 1000,
 };
 
+const buttonStyle = {
+  position: "fixed",
+  top: "6px",
+  left: "3px",
+};
+
 function ModalStack({ open, onClose, cardInfo, setStack }) {
   const dispatch = useDispatch();
   if (!open) return null;
@@ -53,18 +59,17 @@ function ModalStack({ open, onClose, cardInfo, setStack }) {
       });
     });
   };
-
+  console.log(cardInfo);
   const renderModal = () => {
     return (
       <div style={OVERLAY_STYLE}>
         <div style={MODAL_STYLES}>
+          <Button onClick={onClose} style={buttonStyle}>
+            <HighlightOffIcon></HighlightOffIcon>
+          </Button>
           {cardInfo.user_body_parts.map((bodypart) => (
             <AccordionModal bodypart={bodypart} handleDelete={handleDelete} />
           ))}
-
-          <Button onClick={onClose}>
-            <HighlightOffIcon></HighlightOffIcon>
-          </Button>
         </div>
       </div>
     );

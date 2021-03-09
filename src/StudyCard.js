@@ -8,24 +8,31 @@ import {
   Button,
   CardContent,
   CardActions,
+  CardActionArea,
 } from "@material-ui/core";
 import StudyModal from "./modals/StudyModal";
 import { makeStyles } from "@material-ui/core/styles";
+import neuron from "./neuron.png";
+import LearnModal from "./modals/LearnModal";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 
 const paperStyle = {
-  padding: 25,
+  // padding: 25,
+  // width: "74em",
+  // margin: "auto",
+  padding: 20,
+  height: "50vh",
   width: "74em",
   margin: "auto",
+  position: "relative",
+  bottom: "50px",
+  opacity: "95%",
 };
 
 const gridStyle = {
-  float: "left",
-  margin: "15px",
-};
-
-const divStyle = {
-  display: "flex",
-  width: "30%",
+  height: "100vh",
+  // float: "left",
+  // margin: "15px",
 };
 
 const useStyles = makeStyles({
@@ -41,7 +48,7 @@ const useStyles = makeStyles({
     fontSize: 14,
   },
   pos: {
-    marginBottom: 12,
+    marginBottom: 2,
   },
 });
 
@@ -50,6 +57,8 @@ function StudyCard() {
   const studyGroups = useSelector((state) => state.studyGroups);
   const [isOpen, setIsOpen] = React.useState(false);
   const [isStudyInfo, setStudyInfo] = React.useState(null);
+  const [isCardOpen, setIsCardOpen] = React.useState(false);
+  const [isPopUp, setIsPopUp] = React.useState(null);
   const dispatch = useDispatch();
 
   const datetime = (group) => {
@@ -64,36 +73,42 @@ function StudyCard() {
     setStudyInfo(group);
   };
 
-  const handleDelete = (studyCard) => {
+  const handleDelete = (group) => {
     const token = localStorage.token;
-    fetch(`http://localhost:3000/study_groups/${studyCard.id}`, {
+    fetch(`http://localhost:3000/study_groups/${group.id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     }).then(() => {
-      setStudyInfo(studyGroups);
       // let newStudyCard = studyCard.user_body_parts.filter(
       //   (card) => card.id !== studyCard.id
       // );
       // studyCard.user_body_parts = newStudyCard;
+      setStudyInfo(studyGroups);
       dispatch({
         type: "DELETE_STUDY_GROUP",
-        id: studyCard.id,
+        id: group.id,
       });
     });
+  };
+
+  const handleLearn = (group) => {
+    setIsCardOpen(true);
+    setIsPopUp(group);
   };
 
   const studyCard = () => {
     return (
       <Grid style={gridStyle}>
         <Paper elevation={1} style={paperStyle}>
-          <div style={divStyle}>
+          <div className="div-style">
             {studyGroups.map((group) => (
-              <div onClick={() => handleCard(group)}>
-                <Card className={classes.root} variant="outlined">
-                  <CardContent>
+              // <div onClick={() => handleCard(group)}>
+              <Card className={classes.root} variant="outlined">
+                <CardContent>
+                  <div onClick={() => handleCard(group)}>
                     <Typography
                       className={classes.title}
                       color="textSecondary"
@@ -107,9 +122,19 @@ function StudyCard() {
                     <Typography className={classes.pos} color="textSecondary">
                       {group.description}
                     </Typography>
-                  </CardContent>
-                </Card>
-              </div>
+                  </div>
+                  <CardActions>
+                    <CardActionArea>
+                      <Button size="small" onClick={() => handleDelete(group)}>
+                        <DeleteOutlineIcon></DeleteOutlineIcon>
+                      </Button>
+                      <Button onClick={() => handleLearn(group)}>
+                        <img src={neuron} className="neuron-style" />
+                      </Button>
+                    </CardActionArea>
+                  </CardActions>
+                </CardContent>
+              </Card>
             ))}
             <div>
               <StudyModal
@@ -117,6 +142,13 @@ function StudyCard() {
                 onClose={() => setIsOpen(false)}
                 studyCard={isStudyInfo}
                 handleDelete={handleDelete}
+              />
+            </div>
+            <div>
+              <LearnModal
+                open={isCardOpen}
+                onClose={() => setIsCardOpen(false)}
+                learnModal={isPopUp}
               />
             </div>
           </div>

@@ -18,6 +18,14 @@ export default function Menu() {
       type: "SET_USER",
       user: {},
     });
+    dispatch({
+      type: "CHANGE_USERNAME_INPUT",
+      usernameInput: "",
+    });
+    dispatch({
+      type: "CHANGE_PASSWORD_INPUT",
+      passwordInput: "",
+    });
   };
 
   const list = () => (

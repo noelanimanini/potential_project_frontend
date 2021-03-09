@@ -107,7 +107,6 @@ const Login = (props) => {
             <Button
               type="submit"
               value="submit"
-              background-color="white"
               style={buttonStyle}
               fullWidth
               variant="contained"

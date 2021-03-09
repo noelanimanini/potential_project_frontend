@@ -14,6 +14,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import CloseIcon from "@material-ui/icons/Close";
 import neuron from "../neuron.png";
+import LearnModal from "./LearnModal";
+import Modal from "react-modal";
 
 const MODAL_STYLES = {
   position: "fixed",
@@ -42,12 +44,39 @@ const useStyles = makeStyles({
   },
 });
 
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
 function StudyModal({ open, onClose, studyCard, handleDelete }) {
   const classes = useStyles();
   const stuff = useSelector((state) => state.bodyparts);
   const [isCardOpen, setIsCardOpen] = useState(false);
   const [isPopUp, setIsPopUp] = useState(null);
   //stuff gives me the body system I stacked
+
+  var subtitle;
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = "#f00";
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   if (!open) return null;
   console.log(studyCard);
 
@@ -58,9 +87,9 @@ function StudyModal({ open, onClose, studyCard, handleDelete }) {
   };
 
   // const handleLearn = (studyCard) => {
-  //   setIsCardOpen(true)
-  //   setIsPopUp(studyCard)
-  // }
+  //   setIsCardOpen(true);
+  //   setIsPopUp(studyCard);
+  // };
   return ReactDom.createPortal(
     <div style={OVERLAY_STYLE}>
       <div style={MODAL_STYLES}>
@@ -88,9 +117,9 @@ function StudyModal({ open, onClose, studyCard, handleDelete }) {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button onClick={() => handleDelete(studyCard)}>
+            {/* <Button onClick={() => handleDelete(studyCard)}>
               <DeleteOutlineIcon></DeleteOutlineIcon>
-            </Button>
+            </Button> */}
             {/* <div className="button-style">
               <Button onClick={() => handleLearn(studyCard)}>
                 <img src={neuron} className="neuron-style" />
@@ -100,6 +129,22 @@ function StudyModal({ open, onClose, studyCard, handleDelete }) {
         </Card>
       </div>
     </div>,
+    // <div>
+    //   <Modal
+    //     isOpen={modalIsOpen}
+    //     onAfterOpen={afterOpenModal}
+    //     onRequestClose={closeModal}
+    //     style={customStyles}
+    //     contentLabel="Example Modal"
+    //   >
+    //     hello
+    //     <button onClick={closeModal}>close</button>
+    //   </Modal>
+    // </div>,
+    // <div>
+    //   <LearnModal open={isCardOpen} onClose={() => setIsCardOpen(false)} />
+    //   cardInfo={isPopUp}
+    // </div>,
     document.getElementById("portal")
   );
 }

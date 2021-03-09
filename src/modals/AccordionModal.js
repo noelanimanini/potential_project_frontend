@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
+    width: "50em",
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
   helper: {
     borderLeft: `2px solid ${theme.palette.divider}`,
-    padding: theme.spacing(1, 2),
+    padding: "41px 165px",
   },
   link: {
     color: theme.palette.primary.main,
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 function AccordionModal({ bodypart, handleDelete }) {
   const classes = useStyles();
-  const imageStyle = { height: "20vh" };
+  const imageStyle = { width: "39%" };
   const dispatch = useDispatch();
 
   // const handleDelete = (bodypart) => {
@@ -104,13 +104,13 @@ function AccordionModal({ bodypart, handleDelete }) {
             <img src={bodypart.body_part.image} style={imageStyle} />
             {/* {cardInfo.user_body_parts[0].body_part.title} */}
           </Typography>
-          <div className={clsx(classes.column, classes.helper)}></div>
+          <div className={clsx(classes.column, classes.helper)}>hellooo</div>
         </AccordionDetails>
         <Divider />
         <AccordionActions>
-          <Button size="small" onClick={() => handleDelete(bodypart)}>
+          {/* <Button size="small" onClick={() => handleDelete(bodypart)}>
             Delete
-          </Button>
+          </Button> */}
           <Button size="small" color="primary">
             {<Link to="/study_groups">Study Groups</Link>}
           </Button>

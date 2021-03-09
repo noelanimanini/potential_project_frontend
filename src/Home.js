@@ -54,8 +54,10 @@ const Home = () => {
 
   return (
     <Fragment>
-      <NavBar />
-      <BodyContainer />
+      <div className="home-container">
+        <NavBar />
+        <BodyContainer />
+      </div>
     </Fragment>
   );
 };

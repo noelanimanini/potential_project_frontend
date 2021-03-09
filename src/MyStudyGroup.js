@@ -82,9 +82,11 @@ function StudyGroup() {
 
   return (
     <Fragment>
-      <NavBar />
-      <StudyBar />
-      <StudyCard />
+      <div className="background-image">
+        <NavBar />
+        <StudyBar />
+        <StudyCard />
+      </div>
     </Fragment>
   );
 }

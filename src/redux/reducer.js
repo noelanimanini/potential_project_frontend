@@ -158,6 +158,7 @@ export const reducer = (state = initialState, action) => {
           (group) => group.id !== action.id
         ),
       };
+
     default:
       return state;
   }

@@ -33,7 +33,7 @@ const paperStyle = {
   opacity: "45%",
 };
 const buttonStyle = { display: "flex" };
-const wordStyle = { position: "fixed", right: "80px", top: "76.5px" };
+const wordStyle = { position: "relative", top: "7px" };
 
 const formStyle = {
   display: "flex",
@@ -84,7 +84,7 @@ function StudyBar() {
     return (
       <div>
         <Card style={paperStyle}>
-          <Typography style={wordStyle}>create a study group</Typography>
+          <div style={wordStyle}>create a study group</div>
           <div style={buttonStyle}>
             <Button onClick={openModal}>
               <AddIcon></AddIcon>
@@ -135,7 +135,15 @@ function StudyBar() {
         contentLabel="Example Modal"
       >
         <Button onClick={closeModal}>close</Button>
-        <h2>Create A Study Group</h2>
+        <div>
+          <h2
+            className="create-study"
+            style={{ position: "relative", left: "130px" }}
+          >
+            Create A Study Group
+          </h2>
+        </div>
+
         <form onSubmit={(e) => handleSubmit(e)} style={formStyle}>
           <TextField
             label="What are you going to call me?"
