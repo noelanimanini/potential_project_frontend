@@ -13,7 +13,7 @@ export const initialState = {
   studyGroupDate: "",
   studyGroupSystem: "",
   addedStudyGroups: null,
-  comments: "",
+  comments: [],
 };
 
 export const reducer = (state = initialState, action) => {
@@ -159,30 +159,42 @@ export const reducer = (state = initialState, action) => {
           (group) => group.id !== action.id
         ),
       };
-    case "CREATE_COMMENTS":
+    case "SET_COMMENTS":
       return {
         ...state,
-        comments: action.value,
+        comments: action.comments,
       };
-    case "UPDATE_USER_BODY_PART_IN_STACK":
+    case "ADD_COMMENTS":
       // debugger;
       return {
         ...state,
-        userStacks: state.userStacks.map((stack) => {
-          if (stack.id === action.user_body_part.card_stack_id) {
-            return {
-              ...stack,
-              user_body_parts: stack.user_body_parts.map((userbodypart) =>
-                userbodypart.body_part.id === action.user_body_part.body_part.id
-                  ? action.user_body_part
-                  : userbodypart
-              ),
-            };
-          } else {
-            return stack;
-          }
-        }),
+        comments: [...state.comments, action.comments],
       };
+    case "COMMENT_INPUT":
+      return {
+        ...state,
+        commentInput: action.value,
+      };
+
+    // case "UPDATE_USER_BODY_PART_IN_STACK":
+    //   // debugger;
+    //   return {
+    //     ...state,
+    //     userStacks: state.userStacks.map((stack) => {
+    //       if (stack.id === action.user_body_part.card_stack_id) {
+    //         return {
+    //           ...stack,
+    //           user_body_parts: stack.user_body_parts.map((userbodypart) =>
+    //             userbodypart.body_part.id === action.user_body_part.body_part.id
+    //               ? action.user_body_part
+    //               : userbodypart
+    //           ),
+    //         };
+    //       } else {
+    //         return stack;
+    //       }
+    //     }),
+    //   };
 
     default:
       return state;

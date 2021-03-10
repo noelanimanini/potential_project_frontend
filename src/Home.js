@@ -51,7 +51,7 @@ const Home = () => {
       // }
     }
   };
-
+  console.log(user);
   return (
     <Fragment>
       <div className="home-container">

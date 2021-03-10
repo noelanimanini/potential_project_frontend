@@ -16,6 +16,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import neuron from "../neuron.png";
 import LearnModal from "./LearnModal";
 import Modal from "react-modal";
+import Comments from "../Comments";
 
 const MODAL_STYLES = {
   position: "fixed",
@@ -23,7 +24,7 @@ const MODAL_STYLES = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   backgroundColor: "#FFF",
-  padding: "10px",
+  padding: "2em",
   zIndex: 1000,
   borderRadius: "10px",
 };
@@ -40,43 +41,15 @@ const OVERLAY_STYLE = {
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
+    width: "50%",
   },
 });
 
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-  },
-};
-
 function StudyModal({ open, onClose, studyCard, handleDelete }) {
   const classes = useStyles();
-  const stuff = useSelector((state) => state.bodyparts);
-  const [isCardOpen, setIsCardOpen] = useState(false);
-  const [isPopUp, setIsPopUp] = useState(null);
-  //stuff gives me the body system I stacked
+  const stuff = useSelector((state) => state.studyGroups);
 
-  var subtitle;
-  const [modalIsOpen, setIsOpen] = React.useState(false);
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = "#f00";
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
+  console.log(stuff);
   if (!open) return null;
   console.log(studyCard);
 
@@ -127,24 +100,10 @@ function StudyModal({ open, onClose, studyCard, handleDelete }) {
             </div> */}
           </CardActions>
         </Card>
+        <Comments studyCard={studyCard} />
       </div>
     </div>,
-    // <div>
-    //   <Modal
-    //     isOpen={modalIsOpen}
-    //     onAfterOpen={afterOpenModal}
-    //     onRequestClose={closeModal}
-    //     style={customStyles}
-    //     contentLabel="Example Modal"
-    //   >
-    //     hello
-    //     <button onClick={closeModal}>close</button>
-    //   </Modal>
-    // </div>,
-    // <div>
-    //   <LearnModal open={isCardOpen} onClose={() => setIsCardOpen(false)} />
-    //   cardInfo={isPopUp}
-    // </div>,
+
     document.getElementById("portal")
   );
 }

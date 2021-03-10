@@ -54,7 +54,7 @@ function BodyPopUp2({ open, onClose, bodypart }) {
   //       });
   //     });
   // };
-  debugger;
+
   return (
     <div style={OVERLAY_STYLE}>
       <div style={MODAL_STYLES}>
