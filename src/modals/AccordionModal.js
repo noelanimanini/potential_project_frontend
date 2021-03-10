@@ -11,6 +11,7 @@ import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import BodyPopUp2 from "./BodyPopUp2";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,10 +48,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function AccordionModal({ bodypart, handleDelete }) {
+function AccordionModal({ bodypart, handleDelete, setStack }) {
   const classes = useStyles();
-  const imageStyle = { width: "39%" };
+  const imageStyle = { width: "39%", position: "relative", left: "80px" };
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(false);
+  const [isBodyPart, setBodyPart] = useState(null);
 
   // const handleDelete = (bodypart) => {
   //   const token = localStorage.token;
@@ -83,10 +86,10 @@ function AccordionModal({ bodypart, handleDelete }) {
   //     }
   //   })
 
-  // const editNotes = (bodypart) => {
-  //   setIsOpen(true);
-  //   setBodyInfo(bodypart);
-  // };
+  const handleLearn = (bodypart) => {
+    setIsOpen(true);
+    setBodyPart(bodypart);
+  };
 
   return (
     <div className={classes.root}>
@@ -104,26 +107,46 @@ function AccordionModal({ bodypart, handleDelete }) {
             <img src={bodypart.body_part.image} style={imageStyle} />
             {/* {cardInfo.user_body_parts[0].body_part.title} */}
           </Typography>
-          <div className={clsx(classes.column, classes.helper)}>hellooo</div>
+          <div className={clsx(classes.column, classes.helper)}>
+            {/* {bodypart.comments} */}
+            <Button size="small" onClick={() => handleDelete(bodypart)}>
+              Delete
+            </Button>
+            <Button>
+              {
+                <Link
+                  to="/study_groups"
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  Study Groups
+                </Link>
+              }
+            </Button>
+            <Button onClick={() => handleLearn(bodypart)}>Learn More</Button>
+          </div>
+          {/* <Button onClick={(e) => editNotes(e, bodypart)}>Edit Notes</Button> */}
         </AccordionDetails>
         <Divider />
-        <AccordionActions>
-          {/* <Button size="small" onClick={() => handleDelete(bodypart)}>
+        {/* <AccordionActions>
+          <Button size="small" onClick={() => handleDelete(bodypart)}>
             Delete
-          </Button> */}
-          <Button size="small" color="primary">
-            {<Link to="/study_groups">Study Groups</Link>}
           </Button>
-          {/* <Button size="small" onClick={editNotes(bodypart)}>
+          <Button style={{ textDecoration: "none", color: "black" }}>
+            {<Link to="/study_groups">Study Groups</Link>}
+          </Button> */}
+        {/* <Button size="small" onClick={editNotes(bodypart)}>
             Edit Notes
           </Button> */}
-        </AccordionActions>
+        {/* </AccordionActions> */}
       </Accordion>
+      <div>
+        <BodyPopUp2
+          open={isOpen}
+          onClose={() => setIsOpen(false)}
+          bodypart={isBodyPart}
+        />
+      </div>
     </div>
-    // <div>
-    //   <BodyPopUp2/>
-
-    // </div>
   );
 }
 

@@ -138,7 +138,7 @@ const Stack = () => {
       });
     });
   };
-
+  console.log(stack, setStack);
   return (
     <Fragment>
       <SearchBar />

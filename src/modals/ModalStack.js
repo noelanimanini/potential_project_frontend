@@ -59,7 +59,7 @@ function ModalStack({ open, onClose, cardInfo, setStack }) {
       });
     });
   };
-  console.log(cardInfo);
+  console.log(setStack(cardInfo));
   const renderModal = () => {
     return (
       <div style={OVERLAY_STYLE}>
@@ -68,7 +68,11 @@ function ModalStack({ open, onClose, cardInfo, setStack }) {
             <HighlightOffIcon></HighlightOffIcon>
           </Button>
           {cardInfo.user_body_parts.map((bodypart) => (
-            <AccordionModal bodypart={bodypart} handleDelete={handleDelete} />
+            <AccordionModal
+              bodypart={bodypart}
+              handleDelete={handleDelete}
+              setStack={setStack}
+            />
           ))}
         </div>
       </div>
