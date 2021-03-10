@@ -142,6 +142,7 @@ function StudyCard() {
                 onClose={() => setIsOpen(false)}
                 studyCard={isStudyInfo}
                 handleDelete={handleDelete}
+                setStudyInfo={setStudyInfo}
               />
             </div>
             <div>

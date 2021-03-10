@@ -45,7 +45,7 @@ const useStyles = makeStyles({
   },
 });
 
-function StudyModal({ open, onClose, studyCard, handleDelete }) {
+function StudyModal({ open, onClose, studyCard, handleDelete, setStudyInfo }) {
   const classes = useStyles();
   const stuff = useSelector((state) => state.studyGroups);
 
@@ -100,7 +100,7 @@ function StudyModal({ open, onClose, studyCard, handleDelete }) {
             </div> */}
           </CardActions>
         </Card>
-        <Comments studyCard={studyCard} />
+        <Comments studyCard={studyCard} setStudyInfo={setStudyInfo} />
       </div>
     </div>,
 

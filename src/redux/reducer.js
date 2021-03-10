@@ -175,6 +175,18 @@ export const reducer = (state = initialState, action) => {
         ...state,
         commentInput: action.value,
       };
+    case "ADD_COMMENT_TO_USER_STUDY_GROUP":
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          study_groups: state.user.study_groups.map((group) =>
+            group.id == action.comment.study_group_id
+              ? { ...group, comments: [...group.comments, action.comment] }
+              : group
+          ),
+        },
+      };
 
     // case "UPDATE_USER_BODY_PART_IN_STACK":
     //   // debugger;

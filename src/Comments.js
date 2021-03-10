@@ -15,33 +15,33 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import neuron from "./neuron.png";
 
-function Comments({ studyCard }) {
+function Comments({ studyCard, setStudyInfo }) {
   const comments = useSelector((state) => state.comments);
   const studyGroups = useSelector((state) => state.studyGroups);
   const commentInput = useSelector((state) => state.commentInput);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const token = localStorage.token;
-    fetchComments(token);
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.token;
+  //   fetchComments(token);
+  // }, []);
 
-  const fetchComments = (token) => {
-    fetch("http://localhost:3000/comments", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((comments) =>
-        dispatch({
-          type: "SET_COMMENTS",
-          comments: comments,
-        })
-      );
-  };
+  // const fetchComments = (token) => {
+  //   fetch("http://localhost:3000/comments", {
+  //     method: "GET",
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((comments) =>
+  //       dispatch({
+  //         type: "SET_COMMENTS",
+  //         comments: comments,
+  //       })
+  //     );
+  // };
   console.log(studyGroups);
   const handleChange = (e, studyCard) => {
     console.log("this is the studycard", studyCard);
@@ -66,17 +66,27 @@ function Comments({ studyCard }) {
       }),
     })
       .then((response) => response.json())
-      .then((comments) => {
-        console.log(comments);
+      .then((comment) => {
+        console.log(comment);
         // debugger;
+        setStudyInfo({
+          ...studyCard,
+          comments: [...studyCard.comments, comment],
+        });
         dispatch({
-          type: "ADD_COMMENTS",
-          comments: comments,
+          type: "ADD_COMMENT_TO_USER_STUDY_GROUP",
+          comment: comment,
         });
       });
   };
 
-  console.log(comments);
+  const styleComments = (group) => {
+    if (group.comment.length > 10) {
+      return {
+        wordWrap: "break-word",
+      };
+    }
+  };
 
   return (
     <div>
@@ -90,9 +100,13 @@ function Comments({ studyCard }) {
         <Card>
           <Paper elevation={4} style={{ padding: "3px" }}>
             <Paper style={{ maxHeight: 320, overflow: "auto" }}>
-              <List>
-                {comments.map((group) => (
-                  <ListItem>{group.comment}</ListItem>
+              <List style={{ maxHeight: "270px", maxWidth: "230px" }}>
+                {studyCard.comments.map((group) => (
+                  <ListItem>
+                    <div style={{ wordBreak: "break-word" }}>
+                      {group.comment}
+                    </div>
+                  </ListItem>
                 ))}
               </List>
             </Paper>
