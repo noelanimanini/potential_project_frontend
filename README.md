@@ -25,6 +25,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
+### Backend Service 
+Click here to see the backend service! https://github.com/noelanimanini/potential_project_backend
+
 
 #### Stopping the system 
 Wanna quit the service? go ahead and type: ```Cntrl + c```
